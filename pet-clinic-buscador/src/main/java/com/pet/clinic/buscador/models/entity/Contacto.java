@@ -5,11 +5,9 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
-@Table(name = "contactos", schema = "petclinicbuscadordb")
+@Table(name = "contactos")
 @Builder
 @Getter
 @Setter
@@ -23,7 +21,7 @@ public class Contacto implements Serializable {
     @Column(name = "conctatos_id")
     private Long conctatosId;
     @JsonIgnoreProperties({"propietariosId", "hibernateLazyInitializer", "handler"})
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "propietarios_id", nullable = false)
     private Propietario propietariosId;
     @Column(name = "telefono", nullable = false, length = 10)

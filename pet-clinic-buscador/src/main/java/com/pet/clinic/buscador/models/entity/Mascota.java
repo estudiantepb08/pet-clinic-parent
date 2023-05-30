@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "mascotas", schema = "petclinicbuscadordb")
+@Table(name = "mascotas")
 @Builder
 @Getter
 @Setter
@@ -30,5 +30,5 @@ public class Mascota implements Serializable {
     private Date fechaNacimiento;
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name="tipo_mascotas_id")
-    private TipoMascota tipo_mascotas_id;
+    private TipoMascota tipoMascotasId;
 }

@@ -6,7 +6,7 @@ import lombok.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "tipo_mascotas", schema = "petclinicbuscadordb")
+@Table(name = "tipo_mascotas")
 @Builder
 @Getter
 @Setter
