@@ -1,6 +1,6 @@
 package com.pet.clinic.buscador.repository;
 
-import com.pet.clinic.buscador.models.dtos.IMascotaDto;
+import com.pet.clinic.buscador.models.dtos.MascotaDto;
 import com.pet.clinic.buscador.models.entity.Mascota;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -12,11 +12,11 @@ import java.util.List;
 @Repository
 public interface IMascotaRepository extends CrudRepository<Mascota, Long> {
 
-    @Query(value = " SELECT new com.pet.clinic.buscador.models.dtos.IMascotaDto(ma.mascotasId, ma.nombreMascota, ma.fechaNacimiento, tm.tipoMascota) " +
+    @Query(value = " SELECT new com.pet.clinic.buscador.models.dtos.MascotaDto(ma.mascotasId, ma.nombreMascota, ma.fechaNacimiento, tm.tipoMascota) " +
             " FROM Mascota ma INNER JOIN ma.tipoMascotasId tm ")
-    List<IMascotaDto> getMascotasAntTipo();
+    List<MascotaDto> getMascotasAntTipo();
 
-    @Query(value = " SELECT new com.pet.clinic.buscador.models.dtos.IMascotaDto(ma.mascotasId, ma.nombreMascota, ma.fechaNacimiento, tm.tipoMascota) " +
-            " FROM Mascota ma INNER JOIN ma.tipoMascotasId tm WHERE ma.mascotasId =: idMascota ")
-    List<IMascotaDto> getMascotaPorIdAntTipo(@Param("idMascota") Long idMascota);
+    @Query(value = " SELECT new com.pet.clinic.buscador.models.dtos.MascotaDto(ma.mascotasId, ma.nombreMascota, ma.fechaNacimiento, tm.tipoMascota) " +
+            " FROM Mascota ma INNER JOIN ma.tipoMascotasId tm WHERE ma.mascotasId =:idMascota ")
+    List<MascotaDto> getMascotaPorIdAntTipo(@Param("idMascota") Long idMascota);
 }

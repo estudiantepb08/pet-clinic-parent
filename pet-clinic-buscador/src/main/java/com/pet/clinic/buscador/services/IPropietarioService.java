@@ -1,15 +1,13 @@
 package com.pet.clinic.buscador.services;
 
-import com.pet.clinic.buscador.models.entity.Propietario;
 import com.pet.clinic.buscador.pojos.PropietarioRequestPojo;
-
-import java.util.List;
+import com.pet.clinic.buscador.pojos.ResponsePojo;
 
 public interface IPropietarioService {
-    List<Propietario> getListPropietario();
+    ResponsePojo getListPropietario();
 
-    Propietario findPropietarioById(Long propietarioId);
-    Propietario savePropietario(PropietarioRequestPojo propietarioRequestPojo);
-    Propietario updatePropietario(PropietarioRequestPojo propietarioRequestPojo, Long propietarioId);
+    ResponsePojo findPropietarioById(Long propietarioId);
+    ResponsePojo savePropietario(PropietarioRequestPojo propietarioRequestPojo);
+    ResponsePojo updatePropietario(PropietarioRequestPojo propietarioRequestPojo, Long propietarioId);
     Boolean deletePropietario(Long propietarioId);
 }
