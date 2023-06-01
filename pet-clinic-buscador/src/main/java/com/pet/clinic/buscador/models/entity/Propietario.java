@@ -30,10 +30,7 @@ public class Propietario implements Serializable {
     private String primerApellido;
     @Column(name = "segundo_apellido")
     private String segundoApellido;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "mascotas_id")
-    private List<Mascota> mascotasId = new ArrayList<>();
-    @JsonIgnoreProperties({"propietariosId", "hibernateLazyInitializer", "handler"})
-    @OneToMany(mappedBy = "propietariosId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnoreProperties({"propietario", "hibernateLazyInitializer", "handler"})
+    @OneToMany(mappedBy = "propietario", cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     private List<Contacto> contactoId = new ArrayList<>();
 }
