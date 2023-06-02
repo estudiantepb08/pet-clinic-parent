@@ -1,13 +1,10 @@
 package com.pet.clinic.veterinario.buscador.models.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+
 
 @Entity
 @Table(name = "veterinarios")
@@ -31,10 +28,7 @@ public class Veterinario implements Serializable {
     private String primerApellidoVet;
     @Column(name = "segundo_apellido_vet")
     private String segundoApellidoVet;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "especilidades_id")
-    private List<Especialidades> mascotasId = new ArrayList<>();
-    @JsonIgnoreProperties({"veterinariosId", "hibernateLazyInitializer", "handler"})
-    @OneToMany(mappedBy = "veterinariosId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<ContactoVet> contactoId = new ArrayList<>();
+    private Especialidades especialidadId;
 }
