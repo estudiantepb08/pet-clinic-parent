@@ -23,4 +23,5 @@ public interface IPropietarioRepository extends CrudRepository<Propietario, Long
     List<PropietarioDto> getPropietarioPorIdContacto(@Param("idPropietario") Long idPropietario);
     @Query(" SELECT MAX(p.propietariosId)+1 FROM Propietario p ")
     Long getMaxIdPropietario();
+
 }

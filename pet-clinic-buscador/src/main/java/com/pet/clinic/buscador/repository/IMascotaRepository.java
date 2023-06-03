@@ -13,10 +13,10 @@ import java.util.List;
 public interface IMascotaRepository extends CrudRepository<Mascota, Long> {
 
     @Query(value = " SELECT new com.pet.clinic.buscador.models.dtos.MascotaDto(ma.mascotasId, ma.nombreMascota, ma.fechaNacimiento, tm.tipoMascota) " +
-            " FROM Mascota ma INNER JOIN ma.tipoMascotasId tm ")
+            " FROM Mascota ma INNER JOIN ma.tipoMascota tm ")
     List<MascotaDto> getMascotasAntTipo();
 
     @Query(value = " SELECT new com.pet.clinic.buscador.models.dtos.MascotaDto(ma.mascotasId, ma.nombreMascota, ma.fechaNacimiento, tm.tipoMascota) " +
-            " FROM Mascota ma INNER JOIN ma.tipoMascotasId tm WHERE ma.mascotasId =:idMascota ")
+            " FROM Mascota ma INNER JOIN ma.tipoMascota tm WHERE ma.mascotasId =:idMascota ")
     List<MascotaDto> getMascotaPorIdAntTipo(@Param("idMascota") Long idMascota);
 }

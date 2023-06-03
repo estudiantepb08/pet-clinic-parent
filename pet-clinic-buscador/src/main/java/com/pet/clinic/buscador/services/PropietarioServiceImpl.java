@@ -22,7 +22,6 @@ public class PropietarioServiceImpl implements IPropietarioService {
 
     @Autowired
     IPropietarioRepository iPropietarioRepository;
-
     @Autowired
     ResponsePojo responsePojo;
     @Autowired
@@ -71,20 +70,66 @@ public class PropietarioServiceImpl implements IPropietarioService {
          && StringUtils.hasLength(propietarioRequestPojo.getContacto().getTelefono().trim())
          && StringUtils.hasLength(propietarioRequestPojo.getContacto().getCorreoElectronico().trim())){
 
-            Contacto contacto = Contacto.builder().propietario(Propietario.builder().propietariosId(iPropietarioRepository.getMaxIdPropietario()).build()).telefono(propietarioRequestPojo.getContacto().getTelefono().trim())
+            Contacto contacto = Contacto.builder().propietario(Propietario.builder().propietariosId(iPropietarioRepository.getMaxIdPropietario()).build())
+                    .telefono(propietarioRequestPojo.getContacto().getTelefono().trim())
                     .direccion(propietarioRequestPojo.getContacto().getDireccion().trim())
                     .correoElectronico(propietarioRequestPojo.getContacto().getCorreoElectronico().trim()).build();
 
             Propietario propietario = Propietario.builder().primerNombre(propietarioRequestPojo.getPrimerNombre().trim())
-                            .segundoNombre(propietarioRequestPojo.getSegundoNombre().trim())
-                                    .primerApellido(propietarioRequestPojo.getPrimerApellido().trim())
-                                            .segundoApellido(propietarioRequestPojo.getSegundoApellido().trim())
-                                                    .contactoId(Arrays.asList(contacto)).build();
+                    .segundoNombre(propietarioRequestPojo.getSegundoNombre().trim())
+                    .primerApellido(propietarioRequestPojo.getPrimerApellido().trim())
+                    .segundoApellido(propietarioRequestPojo.getSegundoApellido().trim())
+                    .contactoId(Arrays.asList(contacto)).build();
 
              Propietario savePropietario = iPropietarioRepository.save(propietario);
              Contacto saveContacto = iContactoRespository.save(contacto);
-            responsePojo.setData(savePropietario);
-            responsePojo.setMessages(ResponseMessageEnum.MESSAGE_OK_ENUM.getMessages());
+
+             if(savePropietario != null && saveContacto != null){
+                 responsePojo.setData(savePropietario);
+                 responsePojo.setMessages(ResponseMessageEnum.MESSAGE_OK_ENUM.getMessages());
+             }
+        }else{
+            responsePojo.setMessages(ResponseMessageEnum.MESSAGE_ERROR_CAMPOS.getMessages());
+        }
+        return responsePojo;
+    }
+
+    @Override
+    @Transactional
+    public ResponsePojo updatePropietario(PropietarioRequestPojo propietarioRequestPojo, Long propietarioId) {
+
+        if(propietarioRequestPojo != null && StringUtils.hasLength(propietarioRequestPojo.getPrimerNombre().trim())
+                && StringUtils.hasLength(propietarioRequestPojo.getSegundoNombre().trim())
+                && StringUtils.hasLength(propietarioRequestPojo.getPrimerApellido().trim())
+                && StringUtils.hasLength(propietarioRequestPojo.getSegundoApellido().trim())
+                && StringUtils.hasLength(propietarioRequestPojo.getContacto().getDireccion().trim())
+                && StringUtils.hasLength(propietarioRequestPojo.getContacto().getTelefono().trim())
+                && StringUtils.hasLength(propietarioRequestPojo.getContacto().getCorreoElectronico().trim())){
+
+            Contacto contacto = Contacto.builder().conctatosId(propietarioId).propietario(Propietario.builder().propietariosId(propietarioId).build())
+                    .telefono(propietarioRequestPojo.getContacto().getTelefono().trim())
+                    .direccion(propietarioRequestPojo.getContacto().getDireccion().trim())
+                    .correoElectronico(propietarioRequestPojo.getContacto().getCorreoElectronico().trim()).build();
+
+            Propietario propietario = Propietario.builder().propietariosId(propietarioId).primerNombre(propietarioRequestPojo.getPrimerNombre().trim())
+                    .segundoNombre(propietarioRequestPojo.getSegundoNombre().trim())
+                    .primerApellido(propietarioRequestPojo.getPrimerApellido().trim())
+                    .segundoApellido(propietarioRequestPojo.getSegundoApellido().trim())
+                    .contactoId(Arrays.asList(contacto)).build();
+
+            Propietario savePropietario = iPropietarioRepository.save(propietario);
+            Contacto saveContacto = null;
+
+            if (savePropietario != null){
+                saveContacto = iContactoRespository.save(contacto);
+            }
+
+            if(saveContacto != null){
+                responsePojo.setData(savePropietario);
+                responsePojo.setMessages(ResponseMessageEnum.MESSAGE_OK_ENUM.getMessages());
+            }else{
+                responsePojo.setMessages(ResponseMessageEnum.MESSAGE_ERROR_CAMPOS.getMessages());
+            }
 
         }else{
             responsePojo.setMessages(ResponseMessageEnum.MESSAGE_ERROR_CAMPOS.getMessages());
@@ -93,12 +138,16 @@ public class PropietarioServiceImpl implements IPropietarioService {
     }
 
     @Override
-    public ResponsePojo updatePropietario(PropietarioRequestPojo propietarioRequestPojo, Long propietarioId) {
-        return null;
-    }
+    @Transactional
+    public ResponsePojo deletePropietario(Long propietarioId) {
 
-    @Override
-    public Boolean deletePropietario(Long propietarioId) {
-        return null;
+        if (propietarioId != null){
+            iPropietarioRepository.deleteById(propietarioId);
+            iContactoRespository.deleteById(propietarioId);
+            responsePojo.setMessages(ResponseMessageEnum.MESSAGE_OK_ENUM.getMessages());
+        }else {
+            responsePojo.setMessages(ResponseMessageEnum.MESSAGE_ERROR_NOT_FOUND_ENUM.getMessages());
+        }
+        return responsePojo;
     }
 }
