@@ -4,6 +4,7 @@ import com.pet.clinic.buscador.enums.ResponseMessageEnum;
 import com.pet.clinic.buscador.pojos.MascotaRequestPojo;
 import com.pet.clinic.buscador.pojos.ResponsePojo;
 import com.pet.clinic.buscador.services.IMascotaService;
+import jakarta.websocket.server.PathParam;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -125,6 +126,25 @@ public class MascotaController {
             LOGGER.error("Error: en el metodo eliminar mascota", e.getCause().getMessage());
         }finally {
             LOGGER.info("eliminarMascota");
+        }
+        return responsePojoResponseEntity;
+    }
+
+    @GetMapping("/mascotas/buscar-todo")
+    public ResponseEntity<ResponsePojo> getListBuscarTodo(@PathParam("buscar") String buscar){
+        ResponseEntity<ResponsePojo> responsePojoResponseEntity = null;
+        try{
+            responsePojo = iMascotaService.getListarTodo(buscar);
+            if (responsePojo.getMessages().equals(ResponseMessageEnum.MESSAGE_OK_ENUM.getMessages())){
+                responsePojoResponseEntity = ResponseEntity.status(HttpStatus.FOUND).body(responsePojo);
+            }else {
+                responsePojoResponseEntity = ResponseEntity.status(HttpStatus.NOT_FOUND).body(responsePojo);
+            }
+        }catch (Exception e){
+            LOGGER.error("Error en la busqueda por todos los campos", e.getCause().getMessage());
+            responsePojoResponseEntity = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }finally {
+            LOGGER.info("getListBuscarTodo");
         }
         return responsePojoResponseEntity;
     }

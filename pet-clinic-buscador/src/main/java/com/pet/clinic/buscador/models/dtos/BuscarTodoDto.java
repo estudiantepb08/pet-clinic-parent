@@ -1,18 +1,17 @@
 package com.pet.clinic.buscador.models.dtos;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
-import lombok.*;
+import java.util.Date;
 
-import java.io.Serializable;
+public interface BuscarTodoDto {
 
-@Builder
-@Getter
-@Setter
-
-public class BuscarTodoDto extends PropietarioDto {
-
-    public BuscarTodoDto(@NotBlank Long propietariosId, @NotBlank @Size(min = 3, max = 20) String primerNombre, @NotBlank @Size(min = 3, max = 20) String segundoNombre, @NotBlank @Size(min = 3, max = 20) String primerApellido, @NotBlank @Size(min = 3, max = 20) String segundoApellido, @NotBlank @Size(min = 3, max = 20) String telefono, @NotBlank @Size(min = 3, max = 20) String direccion, @NotBlank @Size(min = 3, max = 20) String correoElectronico) {
-        super(propietariosId, primerNombre, segundoNombre, primerApellido, segundoApellido, telefono, direccion, correoElectronico);
-    }
+    String getPrimerNombre();
+    String getSegundoNombre();
+    String getPrimerApellido();
+    String getSegundoApellido();
+    String getTelefono();
+    String getDireccion();
+    String getCorreoElectronico();
+    String getNombreMascota();
+    Date getFechaNacimiento();
+    String getTipoMascota();
 }

@@ -11,4 +11,5 @@ public interface IMascotaService {
     ResponsePojo saveMascota(MascotaRequestPojo mascota);
     ResponsePojo updateMascota(MascotaRequestPojo mascota, Long mascotaId);
     Boolean deleteMascota(Long mascotaId);
+    ResponsePojo getListarTodo(String buscar);
 }
