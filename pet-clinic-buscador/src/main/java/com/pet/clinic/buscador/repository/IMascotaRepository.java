@@ -36,6 +36,6 @@ public interface IMascotaRepository extends CrudRepository<Mascota, Long> {
             " OR c.correo_electronico LIKE %:buscar% "+
             " OR m.nombre_mascota LIKE %:buscar% "+
             " OR CAST(m.fecha_nacimiento AS varchar) LIKE %:buscar% "+
-            " OR tm.tipo_mascota LIKE %:buscar% ", nativeQuery = true)
+            " OR tm.tipo_mascota LIKE %:buscar% order by p.primer_nombre ASC ", nativeQuery = true)
     List<BuscarTodoDto> listBuscarTodo(@Param("buscar") String buscar);
 }
