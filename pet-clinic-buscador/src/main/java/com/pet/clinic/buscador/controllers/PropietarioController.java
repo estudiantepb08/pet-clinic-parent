@@ -42,6 +42,7 @@ public class PropietarioController {
              }
          }catch (Exception e){
              LOGGER.error("Error tipo mascota: ",e.getCause().getMessage());
+             responsePojoResponseEntity = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
          }finally {
              LOGGER.info("getTiposMascotas");
          }
@@ -63,6 +64,7 @@ public class PropietarioController {
             }
         }catch (Exception e){
             LOGGER.error("Error Lista Propietarios: ", e.getCause().getMessage());
+            responsePojoResponseEntity = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }finally {
             LOGGER.info("Lista getPropietarios");
         }
@@ -84,6 +86,7 @@ public class PropietarioController {
             }
         }catch (Exception e){
             LOGGER.error("Error Obtener Propietario: ", e.getCause().getMessage());
+            responsePojoResponseEntity = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
         finally {
             LOGGER.info("getPropietario");
@@ -106,6 +109,7 @@ public class PropietarioController {
             }
         }catch (Exception e){
             LOGGER.error("Error al guardar el propietario", e.getCause().getMessage());
+            responsePojoResponseEntity = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }finally {
             LOGGER.info("savePropietario");
         }
@@ -117,8 +121,6 @@ public class PropietarioController {
                                                           @PathVariable Long requestPropietarioId){
 
         ResponseEntity<ResponsePojo> responsePojoResponseEntity = null;
-       // responsePojo = null;
-
         try{
             responsePojo = iPropietarioService.findPropietarioById(requestPropietarioId);
             if (responsePojo.getMessages().equals(ResponseMessageEnum.MESSAGE_OK_ENUM.getMessages())){

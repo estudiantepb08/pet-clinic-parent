@@ -36,6 +36,7 @@ public class MascotaController {
             }
         }catch (Exception e){
             LOGGER.error("Error List Mascota: ", e.getCause().getMessage());
+            responsePojoResponseEntity = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }finally {
             LOGGER.info("getMascotas");
         }
@@ -55,6 +56,7 @@ public class MascotaController {
             }
         }catch (Exception e){
             LOGGER.error("ERROR Obtener Mascota  Por Id: ", e.getCause().getMessage());
+            responsePojoResponseEntity = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }finally {
             LOGGER.info("getMascotaPorId");
         }
@@ -74,6 +76,7 @@ public class MascotaController {
             }
         }catch (Exception e){
             LOGGER.error("Error en el metodo guardar: ", e.getCause().getMessage());
+            responsePojoResponseEntity = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }finally {
             LOGGER.info("saveMascota");
         }
@@ -101,6 +104,7 @@ public class MascotaController {
             }
         }catch (Exception e){
             LOGGER.error("Error en el metodo actualizar mascota");
+            responsePojoResponseEntity = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }finally {
             LOGGER.info("updateMascota");
         }
@@ -124,6 +128,7 @@ public class MascotaController {
 
         }catch (Exception e){
             LOGGER.error("Error: en el metodo eliminar mascota", e.getCause().getMessage());
+            responsePojoResponseEntity = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }finally {
             LOGGER.info("eliminarMascota");
         }
