@@ -1,6 +1,7 @@
 package com.pet.clinic.buscador.models.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,6 +14,7 @@ import java.io.Serializable;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Contacto implements Serializable {
 
     @Id
@@ -20,10 +22,10 @@ public class Contacto implements Serializable {
     @SequenceGenerator(name = "CONTATO_SEQ", sequenceName = "contactos_conctatos_id_seq", allocationSize = 1)
     @Column(name = "conctatos_id")
     private Long conctatosId;
-    @JsonIgnoreProperties({"propietariosId", "hibernateLazyInitializer", "handler"})
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnoreProperties({"propietario", "hibernateLazyInitializer", "handler"})
+    @ManyToOne(cascade = { CascadeType.MERGE, CascadeType.REFRESH }, fetch = FetchType.LAZY)
     @JoinColumn(name = "propietarios_id", nullable = false)
-    private Propietario propietariosId;
+    private Propietario propietario;
     @Column(name = "telefono", nullable = false, length = 10)
     private String telefono;
     @Column(name = "direccion", nullable = false, length = 50)
