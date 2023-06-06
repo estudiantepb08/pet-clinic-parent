@@ -1,5 +1,7 @@
 package com.pet.clinic.buscador.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -14,6 +16,7 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Mascota implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -28,7 +31,14 @@ public class Mascota implements Serializable {
     @Column(name = "fecha_nacimiento", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fechaNacimiento;
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnoreProperties({"propietario", "hibernateLazyInitializer", "handler"})
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "propietarios_id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Propietario propietario;
+    @JsonIgnoreProperties({"tipoMascota", "hibernateLazyInitializer", "handler"})
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="tipo_mascotas_id")
-    private TipoMascota tipoMascotasId;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private TipoMascota tipoMascota;
 }

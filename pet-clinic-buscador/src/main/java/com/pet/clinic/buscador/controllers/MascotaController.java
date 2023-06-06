@@ -1,21 +1,22 @@
 package com.pet.clinic.buscador.controllers;
 
 import com.pet.clinic.buscador.enums.ResponseMessageEnum;
+import com.pet.clinic.buscador.pojos.MascotaRequestPojo;
 import com.pet.clinic.buscador.pojos.ResponsePojo;
 import com.pet.clinic.buscador.services.IMascotaService;
+import jakarta.websocket.server.PathParam;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.annotation.RequestScope;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/pet-clinic-mascota")
+@RequestMapping("/v1/pet-clinic-mascota")
+@RequestScope
 public class MascotaController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MascotaController.class);
@@ -35,6 +36,7 @@ public class MascotaController {
             }
         }catch (Exception e){
             LOGGER.error("Error List Mascota: ", e.getCause().getMessage());
+            responsePojoResponseEntity = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }finally {
             LOGGER.info("getMascotas");
         }
@@ -54,10 +56,101 @@ public class MascotaController {
             }
         }catch (Exception e){
             LOGGER.error("ERROR Obtener Mascota  Por Id: ", e.getCause().getMessage());
+            responsePojoResponseEntity = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }finally {
             LOGGER.info("getMascotaPorId");
         }
         return responsePojoResponseEntity;
     }
 
+    @PostMapping("/mascota")
+    public ResponseEntity<ResponsePojo> saveMascota(@RequestBody MascotaRequestPojo mascotaRequestPojo){
+
+        ResponseEntity<ResponsePojo> responsePojoResponseEntity = null;
+        try{
+            responsePojo = iMascotaService.saveMascota(mascotaRequestPojo);
+            if (responsePojo.getMessages().equals(ResponseMessageEnum.MESSAGE_OK_ENUM.getMessages())){
+                responsePojoResponseEntity = ResponseEntity.status(HttpStatus.CREATED).body(responsePojo);
+            }else {
+                responsePojoResponseEntity = ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(responsePojo);
+            }
+        }catch (Exception e){
+            LOGGER.error("Error en el metodo guardar: ", e.getCause().getMessage());
+            responsePojoResponseEntity = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }finally {
+            LOGGER.info("saveMascota");
+        }
+        return responsePojoResponseEntity;
+    }
+
+    @PutMapping("/mascota/numero/{mascotaId}")
+    public ResponseEntity<ResponsePojo> updateMascota(@RequestBody MascotaRequestPojo mascotaRequestPojo,
+                                                      @PathVariable Long mascotaId){
+        ResponseEntity<ResponsePojo> responsePojoResponseEntity = null;
+        try{
+            ResponsePojo responsePojoMasco = iMascotaService.findMascotaById(mascotaId);
+
+            if (responsePojoMasco.getMessages().equals(ResponseMessageEnum.MESSAGE_OK_ENUM.getMessages())){
+
+                responsePojo = iMascotaService.updateMascota(mascotaRequestPojo, mascotaId);
+
+                if (responsePojo.getMessages().equals(ResponseMessageEnum.MESSAGE_OK_ENUM.getMessages())){
+                    responsePojoResponseEntity = ResponseEntity.status(HttpStatus.CREATED).body(responsePojo);
+                }else{
+                    responsePojoResponseEntity = ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(responsePojo);
+                }
+            }else {
+                responsePojoResponseEntity = ResponseEntity.status(HttpStatus.NOT_FOUND).body(responsePojo);
+            }
+        }catch (Exception e){
+            LOGGER.error("Error en el metodo actualizar mascota");
+            responsePojoResponseEntity = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }finally {
+            LOGGER.info("updateMascota");
+        }
+        return responsePojoResponseEntity;
+    }
+
+    @DeleteMapping("/mascota/{mascotaId}")
+    public ResponseEntity<ResponsePojo> eliminarMascota(@PathVariable Long mascotaId){
+
+        ResponseEntity<ResponsePojo> responsePojoResponseEntity = null;
+
+        try {
+            responsePojo.setMessages(ResponseMessageEnum.MESSAGE_ERROR_NOT_FOUND_ENUM.getMessages());
+
+            if (iMascotaService.deleteMascota(mascotaId)){
+                responsePojo.setMessages(ResponseMessageEnum.MESSAGE_OK_ENUM.getMessages());
+                responsePojoResponseEntity = ResponseEntity.status(HttpStatus.OK).body(responsePojo);
+            }else{
+                responsePojoResponseEntity = ResponseEntity.status(HttpStatus.NOT_FOUND).body(responsePojo);
+            }
+
+        }catch (Exception e){
+            LOGGER.error("Error: en el metodo eliminar mascota", e.getCause().getMessage());
+            responsePojoResponseEntity = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }finally {
+            LOGGER.info("eliminarMascota");
+        }
+        return responsePojoResponseEntity;
+    }
+
+    @GetMapping("/mascotas/buscar-todo")
+    public ResponseEntity<ResponsePojo> getListBuscarTodo(@PathParam("buscar") String buscar){
+        ResponseEntity<ResponsePojo> responsePojoResponseEntity = null;
+        try{
+            responsePojo = iMascotaService.getListarTodo(buscar);
+            if (responsePojo.getMessages().equals(ResponseMessageEnum.MESSAGE_OK_ENUM.getMessages())){
+                responsePojoResponseEntity = ResponseEntity.status(HttpStatus.FOUND).body(responsePojo);
+            }else {
+                responsePojoResponseEntity = ResponseEntity.status(HttpStatus.NOT_FOUND).body(responsePojo);
+            }
+        }catch (Exception e){
+            LOGGER.error("Error en la busqueda por todos los campos", e.getCause().getMessage());
+            responsePojoResponseEntity = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }finally {
+            LOGGER.info("getListBuscarTodo");
+        }
+        return responsePojoResponseEntity;
+    }
 }
