@@ -5,7 +5,7 @@ import com.pet.clinic.veterinario.buscador.pojos.ResponsePojo;
 
 public interface IEspecialidadService {
     ResponsePojo getEspecialidad() ;
-    ResponsePojo findEspecialidad(Long especialidadId);
+    ResponsePojo findEspecialidadById(Long especialidadId);
     ResponsePojo saveEspecialidad(EspecialidadRequestPojo especialidadRequestPojo);
     ResponsePojo updateEspecialidad(EspecialidadRequestPojo especialidadRequestPojo , Long especialidadId);
     Boolean deleteEspecialidad(Long especialidadId);

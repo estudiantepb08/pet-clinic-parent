@@ -11,8 +11,8 @@ public class VeterinarioDto {
         private String segundoNombreVet;
         private String primerApellidoVet;
         private String segundoApellidoVet;
-        private String telefono_veterinario;
-        private String direccion_veterinario;
-        private String correoElectronico_veterinario;
+        //private String telefono_veterinario;
+        //private String direccion_veterinario;
+        //private String correoElectronico_veterinario;
 
 }
