@@ -15,4 +15,16 @@ public class ExceptionHandler {
 	     ExceptionResponse er = new ExceptionResponse(LocalDateTime.now(),ex.getMessage(), request.getDescription(false), HttpStatus.INTERNAL_SERVER_ERROR.value());
 	      return new ResponseEntity<>(er, HttpStatus.INTERNAL_SERVER_ERROR);
 	    }
+	 
+	 @org.springframework.web.bind.annotation.ExceptionHandler(ExceptionNullData.class)
+	 public ResponseEntity<ExceptionResponse> NullExceptionData(Exception ex, WebRequest request) {
+	     ExceptionResponse er = new ExceptionResponse(LocalDateTime.now(),ex.getMessage(), request.getDescription(false), HttpStatus.INTERNAL_SERVER_ERROR.value());
+	      return new ResponseEntity<>(er, HttpStatus.BAD_REQUEST);
+	    }
+	 
+	 @org.springframework.web.bind.annotation.ExceptionHandler(ModelNotFoundException.class)
+	 public ResponseEntity<ExceptionResponse> ModelNotFoundException(Exception ex, WebRequest request) {
+	     ExceptionResponse er = new ExceptionResponse(LocalDateTime.now(),ex.getMessage(), request.getDescription(false), HttpStatus.INTERNAL_SERVER_ERROR.value());
+	      return new ResponseEntity<>(er, HttpStatus.NOT_FOUND);
+	    }
 }
