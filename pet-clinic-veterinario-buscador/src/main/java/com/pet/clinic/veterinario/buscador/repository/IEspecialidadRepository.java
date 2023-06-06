@@ -12,11 +12,11 @@ import java.util.List;
 @Repository
 public interface IEspecialidadRepository extends CrudRepository <Especialidades, Long>{
 
-    @Query(value = "SELECT new com.pet.clinic.veterinario.buscador.models.dtos.EspecialidadDto(ma.especialidadId, ma.especialidad)" 
+    @Query(value = "SELECT new com.pet.clinic.veterinario.buscador.models.dto.EspecialidadDto(ma.especialidadId, ma.especialidad)"
     + " FROM Especilidad ma")
     List<EspecialidadDto> getEspecialidad();
 
-    @Query(value = "SELECT new com.pet.clinic.veterinario.buscador.models.dtos.EspecialidadDto(ma.especialidadId, ma.especialidad)"
+    @Query(value = "SELECT new com.pet.clinic.veterinario.buscador.models.dto.EspecialidadDto(ma.especialidadId, ma.especialidad)"
      + " FROM Especilidad ma WHERE ma.especialidadId =: ma.especialidadId")
     List<EspecialidadDto> getEspecialidad(@Param("idEspecialidad")Long idEspecialidad);
     
