@@ -15,13 +15,13 @@ import java.util.List;
 @Repository
 public interface IVererinarioRepository extends CrudRepository<Veterinario, Long> {
 
-    @Query (value =  " SELECT new com.pet.clinic.buscador.models.dtos.PropietarioDto(p.veterinarioId, " +
+    @Query (value =  " SELECT new com.pet.clinic.veterinario.buscador.models.dto.PropietarioDto(p.veterinarioId, " +
     " p.primerNombreVet, p.segundoNombreVet, p.primerApellidoVet, p.segundoApellidoVet) " +
-    " FROM Propietario p")
+    " FROM Veterinario p")
     List<VeterinarioDto> getVeterinario();
 
-    @Query (value =  " SELECT new com.pet.clinic.buscador.models.dtos.PropietarioDto(p.veterinarioId, " +
+    @Query (value =  " SELECT new com.pet.clinic.veterinario.buscador.models.dto.PropietarioDto(p.veterinarioId, " +
     " p.primerNombreVet, p.segundoNombreVet, p.primerApellidoVet, p.segundoApellidoVet) " +
-    " FROM Propietario p WHERE p.veterinarioId =:idVeterinario")
+    " FROM Veterinario p WHERE p.veterinarioId =:idVeterinario")
     List<VeterinarioDto> getVeterinario(@Param("idVeterinario")Long idVeterinario);
 }

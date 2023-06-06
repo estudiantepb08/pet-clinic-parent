@@ -22,6 +22,7 @@ public class TipoMascotaServiceImpl implements ITipoMascotaService{
     public ResponsePojo getTipoDeMascota() {
 
         List<TipoMascota> listTipoMascotas = new ArrayList<>();
+
         iTipoMascotaRepository.findAll().forEach(listTipoMascotas::add);
 
          if (listTipoMascotas.isEmpty()){

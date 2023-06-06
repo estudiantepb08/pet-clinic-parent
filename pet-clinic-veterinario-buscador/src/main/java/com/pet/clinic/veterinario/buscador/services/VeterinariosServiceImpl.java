@@ -15,7 +15,7 @@ import java.util.List;
 public class VeterinariosServiceImpl implements IVeterinarioService {
     
     @Autowired
-    IVeterinarioService iVeterinarioRepository;
+    IVererinarioRepository iVeterinarioRepository;
 
 	@Autowired
 	ResponsePojo responsePojo;
@@ -25,7 +25,8 @@ public class VeterinariosServiceImpl implements IVeterinarioService {
 	public ResponsePojo getVeterinario() {
 
 		this.veterinarioDtos = new ArrayList<>();
-		veterinarioDtos = IVererinarioRepository.getVeterinario(); // pendiente repository
+
+		veterinarioDtos = iVeterinarioRepository.getVeterinario(); // pendiente repository
 		if (veterinarioDtos.isEmpty()) {
 			responsePojo.setMessages(ResponseMessageEnum.MESSAGE_ERROR_NOT_FOUND_ENUM.getMessages());
 		} else {
