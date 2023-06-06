@@ -1,0 +1,50 @@
+## Configuracion del puerto del servidor gateway
+server:
+  port: 8762
+## Configuración del registro en eureka server
+eureka:
+  instance:
+    preferIpAddress: false
+    hostname: ${HOSTNAME:localhost}
+
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka}
+
+## Registro del descubrimiento del servicio en eureka
+
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+      globalcors: ## Configuración del CORS a nivel del gateway
+        cors-configurations:
+          '[/**]': ## Configuración para permitir todas las rutas
+            allowedOrigins: ${ALLOWED_ORIGINS} # Variable para reemplazar por el dominio o direccion ip permitidos para consumir los recursos expuestos
+            allowedHeaders: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+
+## Habilitar el api actuator pora poder acceder a /actuator/gateway/routes
+## Exponer los routings o rutas que se han detectado automaticamente (todos)
+management:
+  endpoint:
+    gateway:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: ## Exponemos todos los endpoind de los recursos
+          - "*"

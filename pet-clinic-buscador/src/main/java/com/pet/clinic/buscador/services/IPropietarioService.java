@@ -9,5 +9,5 @@ public interface IPropietarioService {
     ResponsePojo findPropietarioById(Long propietarioId);
     ResponsePojo savePropietario(PropietarioRequestPojo propietarioRequestPojo);
     ResponsePojo updatePropietario(PropietarioRequestPojo propietarioRequestPojo, Long propietarioId);
-    Boolean deletePropietario(Long propietarioId);
+    ResponsePojo deletePropietario(Long propietarioId);
 }

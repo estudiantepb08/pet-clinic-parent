@@ -1,5 +1,6 @@
 package com.pet.clinic.buscador.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,6 +13,7 @@ import java.io.Serializable;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class TipoMascota implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
