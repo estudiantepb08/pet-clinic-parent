@@ -20,13 +20,13 @@ public class OwnerFacade {
 	    @Value("${owner.url}")
 	    private String ownerUrl;
 
-	    public ResponseMsBuscador getOwner(String id) {
+	    public ResponseMsBuscador getOwner(Long propietarioId) {
 	        HttpHeaders headers = new HttpHeaders();
 	        HttpEntity<?> requestEntity = new HttpEntity<>(headers);
 
 	        ResponseEntity<ResponseMsBuscador> response = restTemplate.exchange(
-	        		ownerUrl + "?mascotaId={mascotaId}", HttpMethod.GET, requestEntity,
-	                ResponseMsBuscador.class, id);
+	        		ownerUrl + "?propietarioId={propietarioId}", HttpMethod.GET, requestEntity,
+	                ResponseMsBuscador.class, propietarioId);
 
 	        ResponseMsBuscador responseMsBuscador = response.getBody();
 	        

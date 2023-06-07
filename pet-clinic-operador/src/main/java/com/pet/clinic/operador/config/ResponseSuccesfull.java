@@ -3,6 +3,7 @@ package com.pet.clinic.operador.config;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.pet.clinic.operador.dtos.VisitDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

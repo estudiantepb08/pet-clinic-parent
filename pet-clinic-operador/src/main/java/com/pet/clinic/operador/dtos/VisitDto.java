@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import com.pet.clinic.operador.enums.StatusVisit;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Builder
 @Setter
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -22,9 +24,9 @@ public class VisitDto {
 	
 	private LocalDateTime dateVisit;
 	
-	private Long idPet;
+	private MascotaDto pet;
 	
-	private Long idOwner;
+	private PropietarioDto owner;
 	
 	private Long idVeterinary;
 	
