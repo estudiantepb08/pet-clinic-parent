@@ -2,7 +2,7 @@ package com.pet.clinic.veterinario.buscador.pojos;
 
 import lombok.*;
 import java.io.Serializable;
-import com.pet.clinic.veterinario.buscador.models.entity.Especialidades;
+
 @Builder
 @Getter
 @Setter
@@ -18,7 +18,7 @@ public class VeterinariosRequestPojo implements Serializable {
     private String segundoNombreVet;
     private String primerApellidoVet;
     private String segundoApellidoVet;
-    private Especialidades Especialidades;
+    private EspecialidadRequestPojo especialidad;
 }
 
 

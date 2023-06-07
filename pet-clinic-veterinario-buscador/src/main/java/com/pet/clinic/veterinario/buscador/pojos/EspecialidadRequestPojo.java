@@ -13,6 +13,8 @@ import java.io.Serializable;
 public class EspecialidadRequestPojo  implements Serializable {
 
     private Long especialidadId;
-    private String especialidad;
+    private Integer codigoEspecialidad;
+    private String tipoEspecialidad;
+    private String descripcionTipo;
 
 }

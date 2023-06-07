@@ -6,7 +6,9 @@ import lombok.Data;
 @AllArgsConstructor
 public class EspecialidadDto {
 
-        private Long especialidadId;
-        private String especialidad;
+    private Long especialidadeId;
+    private Integer codigoEspecialidad;
+    private String tipoEspecialidad;
+    private String descripcionTipo;
 
 }

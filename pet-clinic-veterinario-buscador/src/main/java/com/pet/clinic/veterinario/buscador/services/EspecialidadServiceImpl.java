@@ -2,6 +2,7 @@ package com.pet.clinic.veterinario.buscador.services;
 
 import com.pet.clinic.veterinario.buscador.enums.ResponseMessageEnum;
 import com.pet.clinic.veterinario.buscador.models.dto.EspecialidadDto;
+import com.pet.clinic.veterinario.buscador.models.entity.Especialidad;
 import com.pet.clinic.veterinario.buscador.pojos.EspecialidadRequestPojo;
 import com.pet.clinic.veterinario.buscador.pojos.ResponsePojo;
 import com.pet.clinic.veterinario.buscador.repository.IEspecialidadRepository;
@@ -11,63 +12,65 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EspecialidadServiceImpl implements IEspecialidadService {
-    
-    @Autowired
-    IEspecialidadRepository iEspecialidadRepository;
+
+    private IEspecialidadRepository iEspecialidadRepository;
+    private ResponsePojo responsePojo;
+
 
     @Autowired
-    ResponsePojo responsePojo;
-    private List<EspecialidadDto> especialidadDtos;
-
-    @Override
-	public ResponsePojo getEspecialidad() {
-
-        this.especialidadDtos = new ArrayList<>();
-
-        especialidadDtos = iEspecialidadRepository.getEspecialidad();
-        if (especialidadDtos.isEmpty()) {
-			responsePojo.setMessages(ResponseMessageEnum.MESSAGE_ERROR_NOT_FOUND_ENUM.getMessages());
-		} else {
-			responsePojo.setMessages(ResponseMessageEnum.MESSAGE_OK_ENUM.getMessages());
-			responsePojo.setData(this.especialidadDtos);
-		}
-	return responsePojo;
+    public EspecialidadServiceImpl(IEspecialidadRepository iEspecialidadRepository, ResponsePojo responsePojo) {
+        this.iEspecialidadRepository = iEspecialidadRepository;
+        this.responsePojo = responsePojo;
     }
 
     @Override
-	public ResponsePojo findEspecialidadById(Long especialidadId) {
+    public ResponsePojo getEspecialidad() {
 
-        this.especialidadDtos = new LinkedList<>();
+        List<Especialidad> listEspecialidades = new ArrayList<>();
 
-        especialidadDtos = iEspecialidadRepository.getEspecialidad(especialidadId);
-        if (especialidadDtos.isEmpty()) {
-			responsePojo.setMessages(ResponseMessageEnum.MESSAGE_ERROR_NOT_FOUND_ENUM.getMessages());
-		} else {
-			responsePojo.setMessages(ResponseMessageEnum.MESSAGE_OK_ENUM.getMessages());
-			responsePojo.setData(this.especialidadDtos);
-		}
-	return responsePojo;
+        iEspecialidadRepository.findAll().forEach(listEspecialidades::add);
+
+        if (listEspecialidades.isEmpty()) {
+            responsePojo.setMessages(ResponseMessageEnum.MESSAGE_ERROR_NOT_FOUND_ENUM.getMessages());
+        } else {
+            responsePojo.setMessages(ResponseMessageEnum.MESSAGE_OK_ENUM.getMessages());
+            responsePojo.setData(listEspecialidades);
+        }
+        return responsePojo;
     }
 
-    	// revisar funcionamiento
-	@Override
-	public ResponsePojo saveEspecialidad(EspecialidadRequestPojo EspecialidadRequestPojo) {
-		responsePojo.setMessages(ResponseMessageEnum.MESSAGE_OK_ENUM.getMessages());
-		return responsePojo;
-	}
+    @Override
+    public ResponsePojo findEspecialidadById(Long especialidadId) {
 
-	@Override
-	public ResponsePojo updateEspecialidad(EspecialidadRequestPojo EspecialidadRequestPojo, Long EspecialidadId) {
-		responsePojo.setMessages(ResponseMessageEnum.MESSAGE_OK_ENUM.getMessages());
-		return responsePojo;
-	}
+        Optional<Especialidad> optinalEspecialidad = iEspecialidadRepository.findById(especialidadId);
 
-	@Override
-	public Boolean deleteEspecialidad(Long especialidadId) {
-		responsePojo.setMessages(ResponseMessageEnum.MESSAGE_OK_ENUM.getMessages());
-		return Boolean.TRUE;
+        if (optinalEspecialidad.isPresent()) {
+            responsePojo.setMessages(ResponseMessageEnum.MESSAGE_OK_ENUM.getMessages());
+            responsePojo.setData(optinalEspecialidad.get());
+        } else {
+            responsePojo.setMessages(ResponseMessageEnum.MESSAGE_ERROR_NOT_FOUND_ENUM.getMessages());
+
+        }
+        return responsePojo;
+    }
+
+    // revisar funcionamiento
+    @Override
+    public ResponsePojo saveEspecialidad(EspecialidadRequestPojo especialidadRequestPojo) {
+        return null;
+    }
+
+    @Override
+    public ResponsePojo updateEspecialidad(EspecialidadRequestPojo especialidadRequestPojo, Long especialidadId) {
+        return null;
+    }
+
+    @Override
+    public Boolean deleteEspecialidad(Long especialidadId) {
+        return null;
     }
 }
