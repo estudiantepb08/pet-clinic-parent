@@ -31,11 +31,12 @@ public class VeterinarioController {
     @GetMapping("/list-especilidades")
     public ResponseEntity<ResponsePojo> getEspecialidades(){
 
-        responsePojo = iEspecialidadService.getEspecialidad();
         ResponseEntity<ResponsePojo> responsePojoResponseEntity = null;
 
         try {
-            if (responsePojo.getMessages().equals(ResponseMessageEnum.MESSAGE_OK_ENUM.toString())){
+            responsePojo = iEspecialidadService.getEspecialidad();
+
+            if (responsePojo.getMessages().equals(ResponseMessageEnum.MESSAGE_OK_ENUM.getMessages())){
                 responsePojoResponseEntity =  ResponseEntity.status(HttpStatus.FOUND).body(responsePojo);
             }else {
                 responsePojoResponseEntity = ResponseEntity.status(HttpStatus.NO_CONTENT).body(responsePojo);
