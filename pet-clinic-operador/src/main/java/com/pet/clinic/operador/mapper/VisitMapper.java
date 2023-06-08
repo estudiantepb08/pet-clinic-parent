@@ -9,6 +9,7 @@ import java.util.*;
 import com.pet.clinic.operador.config.ResponseMsBuscador;
 import com.pet.clinic.operador.dtos.MascotaDto;
 import com.pet.clinic.operador.dtos.PropietarioDto;
+import com.pet.clinic.operador.dtos.VeterinaryDto;
 import com.pet.clinic.operador.dtos.VisitDto;
 import com.pet.clinic.operador.models.VisitModel;
 import com.google.gson.Gson;
@@ -16,13 +17,20 @@ import com.google.gson.Gson;
 
 public class VisitMapper {
 
-	public static List<VisitDto> mapVisit (List<ResponseMsBuscador> pets , List<ResponseMsBuscador> owners, List<VisitModel> visits) {
+	public static List<VisitDto> mapVisit (
+			List<ResponseMsBuscador> pets ,
+			List<ResponseMsBuscador> owners,
+			List<ResponseMsBuscador> veterinaries,
+			List<VisitModel> visits) 
+	{
 		List<VisitDto> visitResponse = new ArrayList<>();
 		 for (VisitModel visit : visits) {
 		        MascotaDto pet =  findPets(pets, visit.getIdPet());
 				VisitDto visitDto = new VisitDto();
 
 		        PropietarioDto owner = (PropietarioDto) findOwners(owners, visit.getIdOwner());
+		        VeterinaryDto veterinary =  findVeterinaries(veterinaries, visit.getIdVeterinary());
+
 		        visitDto.setIdVisit(visit.getIdVisit());
 		        visitDto.setPet(pet);
 		        visitDto.setOwner(owner);
@@ -31,7 +39,7 @@ public class VisitMapper {
 		        visitDto.setIsFirstVisit(visit.isFirstVisit());
 		        visitDto.setReason(visit.getReason());
 		        visitDto.setStatus(visit.getStatus());
-		        visitDto.setIdVeterinary(visit.getIdVeterinary());
+		        visitDto.setVeterinary(veterinary);
 
 		        visitResponse.add(visitDto);
 		    }		
@@ -82,6 +90,27 @@ public class VisitMapper {
 		            }
 		        }
 		    }
+		}
+		return null;
+}
+	private static VeterinaryDto findVeterinaries(List<ResponseMsBuscador> responses, Long id) {
+		
+		for (Object response : responses) {
+		    Object data = ((ResponseMsBuscador) response).getData();
+		            Map<String, Object> dataMap = (Map<String, Object>) data;
+		            Integer veterinaryIdInteger = (Integer) dataMap.get("veterinarioId");
+		            Long veterinaryId = veterinaryIdInteger.longValue();
+		            String firstName = (String) dataMap.get("primerNombreVet");
+		            String secondName = (String) dataMap.get("segundoNombreVet");
+		            String firstLastName = (String) dataMap.get("primerApellidoVet");
+		            String secondLastName = (String) dataMap.get("segundoApellidoVet");
+		            
+
+		            if (veterinaryId.equals(id)) {
+		                return new VeterinaryDto(veterinaryId, firstName, secondName, firstLastName,secondLastName);
+		            }
+		        
+		    
 		}
 		return null;
 }

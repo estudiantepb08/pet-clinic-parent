@@ -15,6 +15,7 @@ public class Constants {
 	public static final String IS_NULL = "Ha ocurrido un error con esta operación";
 	public static final String NOT_FOUND_PET = "La mascota enviada no existe";
 	public static final String NOT_FOUND_OWNER = "El propietario enviado no existe";
+	public static final String NOT_FOUND_VETERINARY = "El veterinario enviado no existe";
 	public static final String NOT_FOUND_VISIT = "La visita enviada no existe";
 	public static final String SUCCESFULL_CANCEL = "Visita cancelada éxitosamente";
 	public static final String STATUS_ACTIVE = "ACTIVE";

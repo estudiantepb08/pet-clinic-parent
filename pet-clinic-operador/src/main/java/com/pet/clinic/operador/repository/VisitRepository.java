@@ -13,7 +13,7 @@ public interface VisitRepository extends JpaRepository<VisitModel, Long> {
 	 @Query(value = "SELECT * FROM visit v" +
 	            " WHERE (:cost IS NULL OR CAST(v.cost AS varchar) LIKE %:cost%) " +
 	            " AND (:reason IS NULL OR v.reason LIKE %:reason%) " +
-	            " AND (:status IS NULL OR v.status LIKE %:status%) " +
+	            " AND (:status IS NULL OR v.status = :status) " +
 	            " AND (:isFirstVisit IS NULL OR CAST(v.is_first_visit AS varchar) LIKE %:isFirstVisit%)",
 	            nativeQuery = true)
 	    List<VisitModel> searchAll(@Param("cost") String cost,

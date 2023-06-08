@@ -4,11 +4,12 @@ import java.util.Date;
 
 public interface BuscarTodosLab {
 
-    String getPrimerNombrevet();
-    String getSegundoNombrevet();
-    String getPrimerApellidovet();
-    String getSegundoApellidovet();
+    String getPrimerNombreVet();
+    String getSegundoNombreVet();
+    String getPrimerApellidoVet();
+    String getSegundoApellidoVet();
     Integer getCodigoEspecialidad();
     String getTipoEspecialidad();
+    Long getVeterinarioId();
 
 }

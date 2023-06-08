@@ -30,7 +30,7 @@ public class VisitDto {
 	
 	private PropietarioDto owner;
 	
-	private Long idVeterinary;
+	private VeterinaryDto veterinary;
 	
 	private String reason;
 

@@ -1,6 +1,7 @@
 package com.pet.clinic.veterinario.buscador.services;
 
 import com.pet.clinic.veterinario.buscador.enums.ResponseMessageEnum;
+import com.pet.clinic.veterinario.buscador.models.dto.BuscarTodosLab;
 import com.pet.clinic.veterinario.buscador.models.dto.VeterinarioDto;
 import com.pet.clinic.veterinario.buscador.models.entity.Especialidad;
 import com.pet.clinic.veterinario.buscador.models.entity.Veterinario;
@@ -141,6 +142,18 @@ public class VeterinariosServiceImpl implements IVeterinarioService {
 		}
 
 		return responsePojo;
+	}
+
+	@Override
+	public ResponsePojo getListarTodo(String buscar) {
+		List<BuscarTodosLab> respuesta = iVeterinarioRepository.listBuscarTodoVet(buscar);
+		if (respuesta.isEmpty()){
+            responsePojo.setMessages(ResponseMessageEnum.MESSAGE_ERROR_NOT_FOUND_ENUM.getMessages());
+        }else{
+                responsePojo.setMessages(ResponseMessageEnum.MESSAGE_OK_ENUM.getMessages());
+                responsePojo.setData(respuesta);
+        }
+        return responsePojo;
 	}
     
 }

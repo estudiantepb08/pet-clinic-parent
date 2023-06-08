@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.pet.clinic.operador.service.impl.*;
 import com.pet.clinic.operador.utils.Constants;
 import com.pet.clinic.operador.utils.ValidDataVisitMicroservices;
+import com.pet.clinic.operador.utils.ValidateSearch;
 import com.pet.clinic.operador.config.ResponseMsBuscador;
 import com.pet.clinic.operador.dtos.SearchDto;
 import com.pet.clinic.operador.dtos.VisitDto;
@@ -24,6 +25,7 @@ import com.pet.clinic.operador.exceptions.ModelNotFoundException;
 import com.pet.clinic.operador.exceptions.VisitCancel;
 import com.pet.clinic.operador.facade.OwnerFacade;
 import com.pet.clinic.operador.facade.PetFacade;
+import com.pet.clinic.operador.facade.VeterinaryFacade;
 import com.pet.clinic.operador.mapper.VisitMapper;
 import com.pet.clinic.operador.mapper.VisitMapperSearch;
 import com.pet.clinic.operador.models.VisitModel;
@@ -43,7 +45,13 @@ public class VisitServiceImpl implements IVisitService{
 	PetFacade petFacade;
 	
 	@Autowired
+	VeterinaryFacade veterinaryFacade;
+	
+	@Autowired
 	ValidDataVisitMicroservices validDataVisitMS;
+	
+	@Autowired
+	ValidateSearch validateSearch;
 	
     private static final Logger LOGGER = LoggerFactory.getLogger(VisitServiceImpl.class);
 
@@ -59,9 +67,13 @@ public class VisitServiceImpl implements IVisitService{
 		if (responseOwner == null){
 			throw new ModelNotFoundException(Constants.NOT_FOUND_OWNER);
 		}
-		
+		ResponseMsBuscador responseVeterinary = veterinaryFacade.getVeterinary(visitRequest.getVeterinary().getVeterinarioId());
+
+		if (responseVeterinary == null){
+			throw new ModelNotFoundException(Constants.NOT_FOUND_VETERINARY);
+		}
 		VisitModel model = VisitModel.builder().dateVisit(visitRequest.getDateVisit()).idPet(visitRequest.getPet().getMascotasId())
-							.idOwner(visitRequest.getOwner().getPropietariosId()).cost(visitRequest.getCost()).idVeterinary(visitRequest.getIdVeterinary())
+							.idOwner(visitRequest.getOwner().getPropietariosId()).cost(visitRequest.getCost()).idVeterinary(visitRequest.getVeterinary().getVeterinarioId())
 							.reason(visitRequest.getReason()).isFirstVisit(visitRequest.getIsFirstVisit())
 							.status(visitRequest.getStatus()).build();
 		
@@ -83,7 +95,11 @@ public class VisitServiceImpl implements IVisitService{
 	            .map(v -> ownerFacade.getOwner(v.getIdOwner()))
 	            .collect(Collectors.toList());
 		
-		List<VisitDto> visitResponse = VisitMapper.mapVisit(pets, owners, visits);
+		List<ResponseMsBuscador> veterinaries = visits.stream()
+	            .map(v -> veterinaryFacade.getVeterinary(v.getIdVeterinary()))
+	            .collect(Collectors.toList());
+		
+		List<VisitDto> visitResponse = VisitMapper.mapVisit(pets, owners,  veterinaries,visits);
 		return visitResponse;
 	}
 
@@ -95,7 +111,7 @@ public class VisitServiceImpl implements IVisitService{
 		if(existVisit.isEmpty()) {
 			throw new ModelNotFoundException(Constants.NOT_FOUND_VISIT);
 		}
-		validDataVisitMS.ValidData(visitRequest.getPet().getMascotasId(), visitRequest.getOwner().getPropietariosId());
+		validDataVisitMS.ValidData(visitRequest.getPet().getMascotasId(), visitRequest.getOwner().getPropietariosId(), visitRequest.getVeterinary().getVeterinarioId());
 		
 		VisitModel visit = existVisit.get();
 		visit.setDateVisit(visitRequest.getDateVisit());
@@ -104,6 +120,7 @@ public class VisitServiceImpl implements IVisitService{
 		visit.setIdPet(visitRequest.getPet().getMascotasId());
 		visit.setReason(visitRequest.getReason());
 		visit.setStatus(visit.getStatus());
+		visit.setIdVeterinary(visitRequest.getVeterinary().getVeterinarioId());
 		visit.setCost(visitRequest.getCost());
 		visit = visitRepository.save(visit);
 		return visit;
@@ -127,14 +144,22 @@ public class VisitServiceImpl implements IVisitService{
 		if (!responseOwner.getMessages().equals(ResponseMessageEnum.MESSAGE_OK_ENUM.getMessages())){
 			throw new ModelNotFoundException(Constants.NOT_FOUND_OWNER);
 		}
+		ResponseMsBuscador responseVeterinary = veterinaryFacade.getVeterinary(visitFound.getIdVeterinary());
+
+		if (responseVeterinary == null){
+			throw new ModelNotFoundException(Constants.NOT_FOUND_VETERINARY);
+		}
 		List<ResponseMsBuscador> pets = new ArrayList<>();
 		List<ResponseMsBuscador> owners = new ArrayList<>();
 		List<VisitModel> visits = new ArrayList<>();
+		List<ResponseMsBuscador> veterinaries = new ArrayList<>();
+
 		pets.add(responsePet);
 		owners.add(responseOwner);
+		veterinaries.add(responseVeterinary);
 		visits.add(visitFound);
 
-		List<VisitDto> visitResponse = VisitMapper.mapVisit(pets, owners, visits);
+		List<VisitDto> visitResponse = VisitMapper.mapVisit(pets, owners,veterinaries, visits);
 		return visitResponse;
 		
 	}
@@ -162,23 +187,24 @@ public class VisitServiceImpl implements IVisitService{
 			List<VisitDto> visitResponse = new ArrayList<>();
 			ResponseMsBuscador response = new ResponseMsBuscador();
 			List<VisitModel> visits = new ArrayList<>();
-		if( search.getParamMSBuscador() != null) {
-			List<ResponseMsBuscador> responseList = new ArrayList<>();
-			 response = petFacade.searchTodo(search.getParamMSBuscador());
-			 responseList.add(response);
 			visits = visitRepository.searchAll(search.getCost(),search.getReason(),search.getStatus(),search.getIsFirstVisit());
-			visitResponse = VisitMapperSearch.mapVisitSearch(responseList, visits);
-			return visitResponse;
+
+		if( search.getParamMSBuscador() != null || search.getParamMSVeterinary() != null) {
+			
+			return visitResponse = validateSearch.mainSearch(search.getParamMSBuscador(), search.getParamMSVeterinary(), visits);
 		}
-		visits = visitRepository.searchAll(search.getCost(),search.getReason(),search.getStatus(),search.getIsFirstVisit());
 		List<ResponseMsBuscador> pets = visits.stream()
 	            .map(v -> petFacade.getPet(v.getIdPet()))
 	            .collect(Collectors.toList());	
 		
+		List<ResponseMsBuscador> veterinaries = visits.stream()
+	            .map(v -> veterinaryFacade.getVeterinary(v.getIdVeterinary()))
+	            .collect(Collectors.toList());
+		
 		List<ResponseMsBuscador> owners = visits.stream()
 	            .map(v -> ownerFacade.getOwner(v.getIdOwner()))
 	            .collect(Collectors.toList());
-		visitResponse = VisitMapper.mapVisit(pets, owners, visits);
+		visitResponse = VisitMapper.mapVisit(pets, owners,veterinaries, visits);
 		return visitResponse;
 		}
 

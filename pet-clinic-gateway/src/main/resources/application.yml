@@ -36,6 +36,7 @@ spring:
               - POST
               - PUT
               - DELETE
+              - PATCH
 
 ## Habilitar el api actuator pora poder acceder a /actuator/gateway/routes
 ## Exponer los routings o rutas que se han detectado automaticamente (todos)

@@ -113,7 +113,7 @@ public class VisitController {
 		
 		List<VisitDto> visitsFound = visitService.searchVisit(search);
 		
-		if(visitsFound != null || visitsFound.isEmpty()) {
+		if(visitsFound != null) {
 			responseSuccesfull.setData(null);
 			responseSuccesfull.setMessage(Constants.SUCCESFULL_CONSULT);
 			responseSuccesfull.setCode(Constants.CODE_SUCCESFULL);

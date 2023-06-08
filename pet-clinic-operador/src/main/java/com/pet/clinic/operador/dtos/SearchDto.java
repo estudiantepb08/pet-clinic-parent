@@ -15,6 +15,7 @@ public class SearchDto {
 
 	private String paramMSBuscador;
 	
+	private String paramMSVeterinary;
 	
 	private String veterinary;
 	

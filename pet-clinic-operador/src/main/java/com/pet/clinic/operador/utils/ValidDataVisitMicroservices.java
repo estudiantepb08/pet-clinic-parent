@@ -7,6 +7,7 @@ import com.pet.clinic.operador.config.ResponseMsBuscador;
 import com.pet.clinic.operador.exceptions.ModelNotFoundException;
 import com.pet.clinic.operador.facade.OwnerFacade;
 import com.pet.clinic.operador.facade.PetFacade;
+import com.pet.clinic.operador.facade.VeterinaryFacade;
 @Component
 public class ValidDataVisitMicroservices {
 
@@ -15,7 +16,10 @@ public class ValidDataVisitMicroservices {
 	
 	@Autowired
 	PetFacade petFacade;
-	public  Boolean ValidData(Long idPet, Long idOwner){
+	
+	@Autowired
+	VeterinaryFacade veterinaryFacade;
+	public  Boolean ValidData(Long idPet, Long idOwner, Long idVeterinary){
 		ResponseMsBuscador responsePet = petFacade.getPet(idPet);
 
 		if (responsePet == null){
@@ -25,6 +29,11 @@ public class ValidDataVisitMicroservices {
 		
 		if (responseOwner == null){
 			throw new ModelNotFoundException(Constants.NOT_FOUND_OWNER);
+		}
+		ResponseMsBuscador responseVeterinary = veterinaryFacade.getVeterinary(idVeterinary);
+
+		if (responseVeterinary == null){
+			throw new ModelNotFoundException(Constants.NOT_FOUND_VETERINARY);
 		}
 		
 		return true;
