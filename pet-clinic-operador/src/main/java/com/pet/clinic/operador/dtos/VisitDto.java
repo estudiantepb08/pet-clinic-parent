@@ -2,6 +2,8 @@ package com.pet.clinic.operador.dtos;
 
 import java.time.LocalDateTime;
 
+import org.antlr.v4.runtime.misc.NotNull;
+
 import com.pet.clinic.operador.enums.StatusVisit;
 
 import lombok.AllArgsConstructor;
@@ -31,7 +33,7 @@ public class VisitDto {
 	private Long idVeterinary;
 	
 	private String reason;
-	
+
 	private Double cost;
 	
 	private Boolean isFirstVisit;

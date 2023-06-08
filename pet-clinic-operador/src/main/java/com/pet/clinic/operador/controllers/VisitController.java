@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pet.clinic.operador.config.ResponseSuccesfull;
+import com.pet.clinic.operador.dtos.SearchDto;
 import com.pet.clinic.operador.dtos.VisitDto;
 import com.pet.clinic.operador.exceptions.ExceptionNullData;
 import com.pet.clinic.operador.exceptions.ModelNotFoundException;
@@ -104,6 +105,22 @@ public class VisitController {
 
 		}else {
 			throw new ExceptionNullData(Constants.IS_NULL);
+		}
+	}
+	
+	@PostMapping("/search")
+	public ResponseEntity<ResponseSuccesfull<VisitDto>> searchVisit(@RequestBody SearchDto search){
+		
+		List<VisitDto> visitsFound = visitService.searchVisit(search);
+		
+		if(visitsFound != null || visitsFound.isEmpty()) {
+			responseSuccesfull.setData(null);
+			responseSuccesfull.setMessage(Constants.SUCCESFULL_CONSULT);
+			responseSuccesfull.setCode(Constants.CODE_SUCCESFULL);
+			responseSuccesfull.setListData(visitsFound);
+			return new ResponseEntity<ResponseSuccesfull<VisitDto>>(responseSuccesfull,HttpStatus.OK);
+		}else {
+			throw new ModelNotFoundException(Constants.VISITS_SEARCH_NOT_FOUND);
 		}
 	}
 }

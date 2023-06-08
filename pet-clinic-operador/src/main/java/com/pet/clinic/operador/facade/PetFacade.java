@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -29,12 +30,24 @@ public class PetFacade {
 	        HttpEntity<?> requestEntity = new HttpEntity<>(headers);
 
 	        ResponseEntity<ResponseMsBuscador> response = restTemplate.exchange(
-	        		petUrl + "?mascotaId={mascotaId}", HttpMethod.GET, requestEntity,
+	        		petUrl + "/mascota" + "?mascotaId={mascotaId}", HttpMethod.GET, requestEntity,
 	                ResponseMsBuscador.class, mascotaId);
 
 	        ResponseMsBuscador responseMsBuscador = response.getBody();
 	        
 	        return responseMsBuscador;
+	    }
+	    
+	    public ResponseMsBuscador searchTodo(String paramSearch) {
+	    	HttpHeaders headers = new HttpHeaders();
+	    	HttpEntity<?> requestEntity = new HttpEntity<>(headers);
+	    	ResponseEntity<ResponseMsBuscador> response = restTemplate.exchange(
+	    			petUrl + "/mascotas" + "/buscar-todo" + "?buscar={paramSearch}",HttpMethod.GET, requestEntity,
+	    			ResponseMsBuscador.class, paramSearch);
+	    	
+	    	ResponseMsBuscador responseMsBuscador = response.getBody();
+	    	
+	    	return responseMsBuscador;
 	    }
 
 }

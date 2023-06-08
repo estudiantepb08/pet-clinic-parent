@@ -2,6 +2,7 @@ package com.pet.clinic.operador.service;
 
 import org.springframework.http.ResponseEntity;
 
+import com.pet.clinic.operador.dtos.SearchDto;
 import com.pet.clinic.operador.dtos.VisitDto;
 import com.pet.clinic.operador.models.VisitModel;
 import java.util.List;
@@ -17,4 +18,7 @@ public interface IVisitService {
 	public List<VisitDto> getVisitById(Long idVisit);
 	
 	public VisitDto cancelVisit(Long idVisit, VisitDto visit);
+	
+	public List<VisitDto> searchVisit(SearchDto search);
+
 	}

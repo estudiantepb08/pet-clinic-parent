@@ -19,10 +19,10 @@ public class VisitMapper {
 	public static List<VisitDto> mapVisit (List<ResponseMsBuscador> pets , List<ResponseMsBuscador> owners, List<VisitModel> visits) {
 		List<VisitDto> visitResponse = new ArrayList<>();
 		 for (VisitModel visit : visits) {
-		        MascotaDto pet =  findPets(pets, visit.getIdOwner());
+		        MascotaDto pet =  findPets(pets, visit.getIdPet());
 				VisitDto visitDto = new VisitDto();
 
-		        PropietarioDto owner = (PropietarioDto) findOwners(owners, visit.getIdPet());
+		        PropietarioDto owner = (PropietarioDto) findOwners(owners, visit.getIdOwner());
 		        visitDto.setIdVisit(visit.getIdVisit());
 		        visitDto.setPet(pet);
 		        visitDto.setOwner(owner);

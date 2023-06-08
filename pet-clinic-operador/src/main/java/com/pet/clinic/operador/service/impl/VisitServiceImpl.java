@@ -16,6 +16,7 @@ import com.pet.clinic.operador.service.impl.*;
 import com.pet.clinic.operador.utils.Constants;
 import com.pet.clinic.operador.utils.ValidDataVisitMicroservices;
 import com.pet.clinic.operador.config.ResponseMsBuscador;
+import com.pet.clinic.operador.dtos.SearchDto;
 import com.pet.clinic.operador.dtos.VisitDto;
 import com.pet.clinic.operador.enums.ResponseMessageEnum;
 import com.pet.clinic.operador.enums.StatusVisit;
@@ -24,6 +25,7 @@ import com.pet.clinic.operador.exceptions.VisitCancel;
 import com.pet.clinic.operador.facade.OwnerFacade;
 import com.pet.clinic.operador.facade.PetFacade;
 import com.pet.clinic.operador.mapper.VisitMapper;
+import com.pet.clinic.operador.mapper.VisitMapperSearch;
 import com.pet.clinic.operador.models.VisitModel;
 import com.pet.clinic.operador.repository.VisitRepository;
 import com.pet.clinic.operador.service.IVisitService;
@@ -153,5 +155,31 @@ public class VisitServiceImpl implements IVisitService{
 		visitUpdate = visitRepository.save(visitUpdate);
 		return visit;
 	}
+
+
+	@Override
+	public List<VisitDto> searchVisit(SearchDto search) {
+			List<VisitDto> visitResponse = new ArrayList<>();
+			ResponseMsBuscador response = new ResponseMsBuscador();
+			List<VisitModel> visits = new ArrayList<>();
+		if( search.getParamMSBuscador() != null) {
+			List<ResponseMsBuscador> responseList = new ArrayList<>();
+			 response = petFacade.searchTodo(search.getParamMSBuscador());
+			 responseList.add(response);
+			visits = visitRepository.searchAll(search.getCost(),search.getReason(),search.getStatus(),search.getIsFirstVisit());
+			visitResponse = VisitMapperSearch.mapVisitSearch(responseList, visits);
+			return visitResponse;
+		}
+		visits = visitRepository.searchAll(search.getCost(),search.getReason(),search.getStatus(),search.getIsFirstVisit());
+		List<ResponseMsBuscador> pets = visits.stream()
+	            .map(v -> petFacade.getPet(v.getIdPet()))
+	            .collect(Collectors.toList());	
+		
+		List<ResponseMsBuscador> owners = visits.stream()
+	            .map(v -> ownerFacade.getOwner(v.getIdOwner()))
+	            .collect(Collectors.toList());
+		visitResponse = VisitMapper.mapVisit(pets, owners, visits);
+		return visitResponse;
+		}
 
 }

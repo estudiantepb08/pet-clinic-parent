@@ -3,7 +3,7 @@ package com.pet.clinic.buscador.models.dtos;
 import java.util.Date;
 
 public interface BuscarTodoDto {
-
+	Long   getPropietariosId();
     String getPrimerNombre();
     String getSegundoNombre();
     String getPrimerApellido();
@@ -14,4 +14,5 @@ public interface BuscarTodoDto {
     String getNombreMascota();
     Date getFechaNacimiento();
     String getTipoMascota();
+    Long getMascotasId();
 }

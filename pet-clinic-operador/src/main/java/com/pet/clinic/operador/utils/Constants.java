@@ -20,6 +20,7 @@ public class Constants {
 	public static final String STATUS_ACTIVE = "ACTIVE";
 	public static final String STATUS_INACTIVE = "INACTIVE";
 	public static final String VISIT_CANCEL = "La visita ya se encuentra cancelada!!";
+	public static final String VISITS_SEARCH_NOT_FOUND = "No se encuentra la visia por la busqueda ingresada";
 
 
 }
