@@ -24,19 +24,20 @@ public class EspecialidadController {
     private ResponsePojo responsePojo;
 
     @GetMapping("/especilidades")
-    public ResponseEntity<ResponsePojo> getEspecialidad(){
+    public ResponseEntity<ResponsePojo> getEspecialidades(){
 
-        responsePojo = iEspecialidadService.getEspecialidad();
         ResponseEntity<ResponsePojo> responsePojoResponseEntity = null;
 
         try {
-            if (responsePojo.getMessages().equals(ResponseMessageEnum.MESSAGE_OK_ENUM.toString())){
+            responsePojo = iEspecialidadService.getEspecialidad();
+
+            if (responsePojo.getMessages().equals(ResponseMessageEnum.MESSAGE_OK_ENUM.getMessages())){
                 responsePojoResponseEntity =  ResponseEntity.status(HttpStatus.FOUND).body(responsePojo);
             }else {
                 responsePojoResponseEntity = ResponseEntity.status(HttpStatus.NO_CONTENT).body(responsePojo);
             }
         }catch (Exception e){
-            LOGGER.error("Error en lista de Especialidad: ",e.getCause().getMessage());
+            LOGGER.error("Error en Especialidad: ",e.getCause().getMessage());
         }finally {
             LOGGER.info("getEspecialidad");
         }
@@ -56,10 +57,10 @@ public class EspecialidadController {
                 responsePojoResponseEntity = ResponseEntity.status(HttpStatus.NO_CONTENT).body(responsePojo);
             }
         }catch (Exception e){
-            LOGGER.error("Especialidad no encontrado: ", e.getCause().getMessage());
+            LOGGER.error("Veterinario no encontrado: ", e.getCause().getMessage());
         }
         finally {
-            LOGGER.info("getEspecialidad");
+            LOGGER.info("getVeterinario");
         }
         return responsePojoResponseEntity;
     }
