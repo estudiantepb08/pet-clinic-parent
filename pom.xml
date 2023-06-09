@@ -17,6 +17,7 @@
 		<module>pet-clinic-gateway</module>
 		<module>pet-clinic-veterinario-buscador</module>
 		<module>pet-clinic-home</module>
+        <module>pet-clinic-eureka</module>
 	</modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

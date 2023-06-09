@@ -1,6 +1,7 @@
 package com.pet.clinic.buscador.models.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -15,6 +16,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Propietario implements Serializable {
 
     @Id
@@ -30,10 +32,8 @@ public class Propietario implements Serializable {
     private String primerApellido;
     @Column(name = "segundo_apellido")
     private String segundoApellido;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "mascotas_id")
-    private List<Mascota> mascotasId = new ArrayList<>();
-    @JsonIgnoreProperties({"propietariosId", "hibernateLazyInitializer", "handler"})
-    @OneToMany(mappedBy = "propietariosId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnoreProperties({"propietario", "hibernateLazyInitializer", "handler"})
+    @OneToMany(mappedBy = "propietario", cascade = { CascadeType.MERGE, CascadeType.REFRESH },
+               fetch = FetchType.LAZY)
     private List<Contacto> contactoId = new ArrayList<>();
 }
