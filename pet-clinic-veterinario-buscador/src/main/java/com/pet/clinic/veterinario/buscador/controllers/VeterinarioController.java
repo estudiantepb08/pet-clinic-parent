@@ -189,7 +189,7 @@ public class VeterinarioController {
             if (responsePojo.getMessages().equals(ResponseMessageEnum.MESSAGE_OK_ENUM.getMessages())) {
                 responsePojoResponseEntity = ResponseEntity.status(HttpStatus.OK).body(responsePojo);
             } else {
-                responsePojoResponseEntity = ResponseEntity.status(HttpStatus.OK).body(responsePojo);
+                responsePojoResponseEntity = ResponseEntity.status(HttpStatus.NOT_FOUND).body(responsePojo);
             }
 
         } catch (Exception e) {

@@ -176,13 +176,18 @@ public class VeterinariosServiceImpl implements IVeterinarioService {
 	@Override
 	public ResponsePojo deleteVeterinario(Long veterinarioId) {
 
-		if(veterinarioId!= null){
+		if(veterinarioId!= null ){
+			Optional<Veterinario> existVet = iVeterinarioRepository.findById(veterinarioId);
+			if (existVet.isPresent()){
 			iVeterinarioRepository.deleteById(veterinarioId);
 			responsePojo.setMessages(ResponseMessageEnum.MESSAGE_OK_ENUM.getMessages());
+			responsePojo.setData(null);}
+		else{
+			responsePojo.setMessages(ResponseMessageEnum.MESSAGE_ERROR_NOT_FOUND_ENUM.getMessages());
+				responsePojo.setData(null);}
 		}else{
 			responsePojo.setMessages(ResponseMessageEnum.MESSAGE_ERROR_NOT_FOUND_ENUM.getMessages());
-		}
-
+			responsePojo.setData(null);}
 		return responsePojo;
 	}
 
