@@ -161,6 +161,8 @@ public class VeterinarioController {
         try{
             responsePojo = iVeterinarioService.findVeterinarioById(VeterinarioId);
             if(responsePojo.getMessages().equals(ResponseMessageEnum.MESSAGE_OK_ENUM.getMessages())){
+
+
                 responsePojo = iVeterinarioService.updateVeterinario(veterinariosRequestPojo,VeterinarioId);
                 responsePojoResponseEntity = ResponseEntity.status(HttpStatus.CREATED).body(responsePojo);
             }else{
