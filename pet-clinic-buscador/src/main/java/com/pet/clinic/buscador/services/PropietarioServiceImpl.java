@@ -117,15 +117,15 @@ public class PropietarioServiceImpl implements IPropietarioService {
                     .segundoApellido(propietarioRequestPojo.getSegundoApellido().trim())
                     .contactoId(Arrays.asList(contacto)).build();
 
-            Propietario savePropietario = iPropietarioRepository.save(propietario);
-            Contacto saveContacto = null;
+            Propietario updatePropietario = iPropietarioRepository.save(propietario);
+            Contacto updateContacto = null;
 
-            if (savePropietario != null){
-                saveContacto = iContactoRespository.save(contacto);
+            if (updatePropietario != null){
+                updateContacto = iContactoRespository.save(contacto);
             }
 
-            if(saveContacto != null){
-                responsePojo.setData(savePropietario);
+            if(updateContacto != null){
+                responsePojo.setData(updatePropietario);
                 responsePojo.setMessages(ResponseMessageEnum.MESSAGE_OK_ENUM.getMessages());
             }else{
                 responsePojo.setMessages(ResponseMessageEnum.MESSAGE_ERROR_CAMPOS.getMessages());
