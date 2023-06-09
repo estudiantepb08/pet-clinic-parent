@@ -27,7 +27,7 @@ public class VeterinarioController {
     private IVeterinarioService iVeterinarioService;
     private ResponsePojo responsePojo;
 
-    @GetMapping("/especilidades")
+    @GetMapping("/especialidades")
     public ResponseEntity<ResponsePojo> getEspecialidades(){
 
         ResponseEntity<ResponsePojo> responsePojoResponseEntity = null;
@@ -47,6 +47,8 @@ public class VeterinarioController {
         }
         return responsePojoResponseEntity;
     }
+
+
 
     @GetMapping
     public ResponseEntity<ResponsePojo> getVeterinario(){
@@ -173,8 +175,8 @@ public class VeterinarioController {
         return responsePojoResponseEntity;
     }
 
-    @DeleteMapping("/{veterinarioId}")
-    public ResponseEntity<ResponsePojo> eliminarVeterinario(@PathVariable Long veterinarioId) {
+    @DeleteMapping("/")
+    public ResponseEntity<ResponsePojo> eliminarVeterinario(@PathParam("veterinarioId") Long veterinarioId) {
 
         ResponseEntity<ResponsePojo> responsePojoResponseEntity = null;
 

@@ -57,10 +57,10 @@ public class EspecialidadController {
                 responsePojoResponseEntity = ResponseEntity.status(HttpStatus.NO_CONTENT).body(responsePojo);
             }
         }catch (Exception e){
-            LOGGER.error("Veterinario no encontrado: ", e.getCause().getMessage());
+            LOGGER.error("Epecialidad no encontrado: ", e.getCause().getMessage());
         }
         finally {
-            LOGGER.info("getVeterinario");
+            LOGGER.info("getEspecialidad");
         }
         return responsePojoResponseEntity;
     }
