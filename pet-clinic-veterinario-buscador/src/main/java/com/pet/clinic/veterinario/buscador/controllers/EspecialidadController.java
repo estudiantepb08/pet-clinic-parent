@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/pet-clinic-especialidades")
+@RequestMapping("/v1/pet-clinic-especialidades")
 
 public class EspecialidadController {
     private static final Logger LOGGER = LoggerFactory.getLogger(EspecialidadController.class);
@@ -23,7 +23,7 @@ public class EspecialidadController {
     private IEspecialidadService iEspecialidadService;
     private ResponsePojo responsePojo;
 
-    @GetMapping("/especilidades")
+    @GetMapping
     public ResponseEntity<ResponsePojo> getEspecialidades(){
 
         ResponseEntity<ResponsePojo> responsePojoResponseEntity = null;
