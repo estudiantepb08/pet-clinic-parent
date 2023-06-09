@@ -15,7 +15,7 @@ import org.springframework.web.context.annotation.RequestScope;
 
 @RestController
 @AllArgsConstructor
-//@RequestMapping("/v1/pet-clinic")
+@RequestMapping("/v1/pet-clinic")
 @RequestScope
 public class PropietarioController {
 
