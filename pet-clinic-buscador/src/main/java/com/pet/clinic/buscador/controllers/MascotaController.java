@@ -43,8 +43,8 @@ public class MascotaController {
         return responsePojoResponseEntity;
     }
 
-    @GetMapping("/mascota")
-    public ResponseEntity<ResponsePojo> getMascotaPorId(@RequestParam("mascotaId") String mascotaId){
+    @GetMapping("/mascotas/{mascotaId}")
+    public ResponseEntity<ResponsePojo> getMascotaPorId(@PathVariable String mascotaId){
 
         ResponseEntity<ResponsePojo> responsePojoResponseEntity = null;
         responsePojo = iMascotaService.findMascotaById(Long.parseLong(mascotaId));
@@ -63,7 +63,7 @@ public class MascotaController {
         return responsePojoResponseEntity;
     }
 
-    @PostMapping("/mascota")
+    @PostMapping("/mascotas")
     public ResponseEntity<ResponsePojo> saveMascota(@RequestBody MascotaRequestPojo mascotaRequestPojo){
 
         ResponseEntity<ResponsePojo> responsePojoResponseEntity = null;
@@ -83,7 +83,7 @@ public class MascotaController {
         return responsePojoResponseEntity;
     }
 
-    @PutMapping("/mascota/numero/{mascotaId}")
+    @PutMapping("/mascotas/numero/{mascotaId}")
     public ResponseEntity<ResponsePojo> updateMascota(@RequestBody MascotaRequestPojo mascotaRequestPojo,
                                                       @PathVariable Long mascotaId){
         ResponseEntity<ResponsePojo> responsePojoResponseEntity = null;
@@ -111,7 +111,7 @@ public class MascotaController {
         return responsePojoResponseEntity;
     }
 
-    @DeleteMapping("/mascota/{mascotaId}")
+    @DeleteMapping("/mascotas/{mascotaId}")
     public ResponseEntity<ResponsePojo> eliminarMascota(@PathVariable Long mascotaId){
 
         ResponseEntity<ResponsePojo> responsePojoResponseEntity = null;
