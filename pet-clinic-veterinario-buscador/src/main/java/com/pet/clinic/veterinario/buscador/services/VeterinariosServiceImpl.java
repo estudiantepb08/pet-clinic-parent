@@ -132,6 +132,48 @@ public class VeterinariosServiceImpl implements IVeterinarioService {
 	}
 
 	@Override
+	@Transactional
+	public ResponsePojo updateVeterinarioPatch(VeterinariosRequestPojo veterinariosRequestPojo, Long veterinarioId) {
+		Optional<Veterinario> optionalVeterinario = iVeterinarioRepository.findById(veterinarioId);
+
+		if (optionalVeterinario.isPresent()) {
+			Veterinario veterinario = optionalVeterinario.get();
+
+
+			if (veterinariosRequestPojo.getPrimerNombreVet() != null) {
+				veterinario.setPrimerNombreVet(veterinariosRequestPojo.getPrimerNombreVet().trim());
+			}
+			if (veterinariosRequestPojo.getSegundoNombreVet() != null) {
+				veterinario.setSegundoNombreVet(veterinariosRequestPojo.getSegundoNombreVet().trim());
+			}
+			if (veterinariosRequestPojo.getPrimerApellidoVet() != null) {
+				veterinario.setPrimerApellidoVet(veterinariosRequestPojo.getPrimerApellidoVet().trim());
+			}
+			if (veterinariosRequestPojo.getSegundoApellidoVet() != null) {
+				veterinario.setSegundoApellidoVet(veterinariosRequestPojo.getSegundoApellidoVet().trim());
+			}
+			if (veterinariosRequestPojo.getEspecialidad() != null &&
+					veterinariosRequestPojo.getEspecialidad().getEspecialidadId() != null &&
+					!veterinariosRequestPojo.getEspecialidad().getEspecialidadId().equals(0)) {
+				veterinario.setEspecialidadId(Especialidad.builder()
+						.especialidadId(veterinariosRequestPojo.getEspecialidad().getEspecialidadId())
+						.build());
+			}
+
+			Veterinario saveVeterinario = iVeterinarioRepository.save(veterinario);
+
+			if (saveVeterinario != null) {
+				responsePojo.setData(saveVeterinario);
+				responsePojo.setMessages(ResponseMessageEnum.MESSAGE_OK_ENUM.getMessages());
+			}
+		} else {
+			responsePojo.setMessages(ResponseMessageEnum.MESSAGE_ERROR_NOT_FOUND_ENUM.getMessages());
+		}
+
+		return responsePojo;
+	}
+
+	@Override
 	public ResponsePojo deleteVeterinario(Long veterinarioId) {
 
 		if(veterinarioId!= null){

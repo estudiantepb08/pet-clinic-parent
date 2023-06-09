@@ -18,7 +18,7 @@ import com.pet.clinic.veterinario.buscador.services.IVeterinarioService;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/pet-clinic-veterinarios")
+@RequestMapping("/v1/pet-clinic-veterinarios")
 public class VeterinarioController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(VeterinarioController.class);
@@ -126,6 +126,31 @@ public class VeterinarioController {
         }
         return responsePojoResponseEntity;
     }
+
+    @PatchMapping("/{veterinarioId}")
+    public ResponseEntity<ResponsePojo> updateVeterinarioPatch(
+            @RequestBody VeterinariosRequestPojo veterinarioRequestPojo,
+            @PathVariable Long veterinarioId) {
+
+        ResponseEntity<ResponsePojo> responsePojoResponseEntity = null;
+        responsePojo = iVeterinarioService.updateVeterinarioPatch(veterinarioRequestPojo, veterinarioId);
+
+        try {
+            if (responsePojo.getMessages().equals(ResponseMessageEnum.MESSAGE_OK_ENUM.getMessages())) {
+                responsePojoResponseEntity = ResponseEntity.status(HttpStatus.OK).body(responsePojo);
+            } else {
+                responsePojoResponseEntity = ResponseEntity.status(HttpStatus.NOT_FOUND).body(responsePojo);
+            }
+        } catch (Exception e) {
+            LOGGER.error("Error al actualizar el veterinario", e.getCause().getMessage());
+            responsePojoResponseEntity = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        } finally {
+            LOGGER.info("updateVeterinarioPatch");
+        }
+
+        return responsePojoResponseEntity;
+    }
+
 
     @PutMapping ("/{VeterinarioId}")
     public ResponseEntity<ResponsePojo> updateVeterinario(@RequestBody VeterinariosRequestPojo veterinariosRequestPojo,
