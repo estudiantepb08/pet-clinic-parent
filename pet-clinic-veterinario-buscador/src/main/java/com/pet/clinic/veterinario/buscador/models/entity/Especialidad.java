@@ -1,8 +1,9 @@
 package com.pet.clinic.veterinario.buscador.models.entity;
 
-import jakarta.persistence.*;
 import lombok.*;
 import java.io.Serializable;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "especialidades")

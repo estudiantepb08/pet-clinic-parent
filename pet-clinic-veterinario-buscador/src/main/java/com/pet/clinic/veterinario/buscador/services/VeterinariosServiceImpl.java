@@ -5,11 +5,12 @@ import com.pet.clinic.veterinario.buscador.models.dto.BuscarTodosLab;
 import com.pet.clinic.veterinario.buscador.models.dto.VeterinarioDto;
 import com.pet.clinic.veterinario.buscador.models.entity.Especialidad;
 import com.pet.clinic.veterinario.buscador.models.entity.Veterinario;
+import com.pet.clinic.veterinario.buscador.models.entity.VeterinarioElastic;
 import com.pet.clinic.veterinario.buscador.pojos.EspecialidadRequestPojo;
 import com.pet.clinic.veterinario.buscador.pojos.VeterinariosRequestPojo;
 import com.pet.clinic.veterinario.buscador.pojos.ResponsePojo;
+import com.pet.clinic.veterinario.buscador.repository.DataAccessRepository;
 import com.pet.clinic.veterinario.buscador.repository.IVererinarioRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -19,15 +20,20 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 @Service
 public class VeterinariosServiceImpl implements IVeterinarioService {
     
-    @Autowired
-    IVererinarioRepository iVeterinarioRepository;
+    /*@Autowired
+    IVererinarioRepository iVeterinarioRepository;]*/
 
 	@Autowired
+	DataAccessRepository iVeterinarioRepository;
+	
+	@Autowired
 	ResponsePojo responsePojo;
-	private List<Veterinario> veterinarios;
+	private List<VeterinarioElastic> veterinarios;
 
     @Override
 	public ResponsePojo getVeterinario() {
@@ -45,9 +51,9 @@ public class VeterinariosServiceImpl implements IVeterinarioService {
 	}
 
 	@Override
-	public ResponsePojo findVeterinarioById(Long veterinarioId) {
+	public ResponsePojo findVeterinarioById(String veterinarioId) {
 
-		Optional<Veterinario> optionalVeterionario = iVeterinarioRepository.findById(veterinarioId); // pendiente repository
+		Optional<VeterinarioElastic> optionalVeterionario = iVeterinarioRepository.findById(veterinarioId); // pendiente repository
 		if (optionalVeterionario.isPresent()) {
 			responsePojo.setMessages(ResponseMessageEnum.MESSAGE_OK_ENUM.getMessages());
 			responsePojo.setData(optionalVeterionario.get());
@@ -72,15 +78,16 @@ public class VeterinariosServiceImpl implements IVeterinarioService {
 				{
 
 
-				Veterinario veterinario = Veterinario.builder()
+				VeterinarioElastic veterinario = VeterinarioElastic.builder()
+						.veterinarioId(veterinariosRequestPojo.getVeterinarioId())
 						.primerNombreVet(veterinariosRequestPojo.getPrimerNombreVet().trim())
 						.segundoNombreVet(veterinariosRequestPojo.getSegundoNombreVet().trim())
 						.primerApellidoVet(veterinariosRequestPojo.getPrimerApellidoVet().trim())
 						.segundoApellidoVet(veterinariosRequestPojo.getSegundoApellidoVet().trim())
-						.especialidadId(Especialidad.builder().especialidadId(veterinariosRequestPojo.getEspecialidad().getEspecialidadId()).build())
+						.especialidad(Especialidad.builder().codigoEspecialidad(veterinariosRequestPojo.getEspecialidad().getCodigoEspecialidad())
+								.descripcionTipo(veterinariosRequestPojo.getEspecialidad().getDescripcionTipo()).tipoEspecialidad(veterinariosRequestPojo.getEspecialidad().getTipoEspecialidad()).build())
 						.build();
-
-					Veterinario saveVeterinario = iVeterinarioRepository.save(veterinario);
+					VeterinarioElastic saveVeterinario = iVeterinarioRepository.save(veterinario);
 
 				if(saveVeterinario != null){
 					responsePojo.setData(saveVeterinario);
@@ -95,27 +102,29 @@ public class VeterinariosServiceImpl implements IVeterinarioService {
 
 	@Override
 	@Transactional
-	public ResponsePojo updateVeterinario(VeterinariosRequestPojo veterinariosRequestPojo, Long veterinarioId) {
+	public ResponsePojo updateVeterinario(VeterinariosRequestPojo veterinariosRequestPojo, String veterinarioId) {
 
-		Optional<Veterinario> optionalVeterionarioup = iVeterinarioRepository.findById(veterinarioId);
+		Optional<VeterinarioElastic> optionalVeterionarioup = iVeterinarioRepository.findById(veterinarioId);
 
 		if (optionalVeterionarioup.isPresent()) {
 			if (veterinariosRequestPojo != null && StringUtils.hasLength(veterinariosRequestPojo.getPrimerNombreVet().trim())
 					|| (StringUtils.hasLength(veterinariosRequestPojo.getSegundoNombreVet().trim())
 					|| StringUtils.hasLength(veterinariosRequestPojo.getSegundoApellidoVet().trim()))
 					&& StringUtils.hasLength(veterinariosRequestPojo.getPrimerApellidoVet().trim())
-					&& !veterinariosRequestPojo.getEspecialidad().getEspecialidadId().equals(0)) {
+					&& !veterinariosRequestPojo.getEspecialidad().getCodigoEspecialidad().equals(0)) {
 
 
-				Veterinario veterinario = Veterinario.builder().veterinarioId(veterinarioId)
+				VeterinarioElastic veterinario = VeterinarioElastic.builder().id(veterinarioId)
+						.veterinarioId(veterinariosRequestPojo.getVeterinarioId())
 						.primerNombreVet(veterinariosRequestPojo.getPrimerNombreVet().trim())
 						.segundoNombreVet(veterinariosRequestPojo.getSegundoNombreVet().trim())
 						.primerApellidoVet(veterinariosRequestPojo.getPrimerApellidoVet().trim())
 						.segundoApellidoVet(veterinariosRequestPojo.getSegundoApellidoVet().trim())
-						.especialidadId(Especialidad.builder().especialidadId(veterinariosRequestPojo.getEspecialidad().getEspecialidadId()).build())
+						.especialidad(Especialidad.builder().codigoEspecialidad(veterinariosRequestPojo.getEspecialidad().getCodigoEspecialidad())
+								.descripcionTipo(veterinariosRequestPojo.getEspecialidad().getDescripcionTipo()).tipoEspecialidad(veterinariosRequestPojo.getEspecialidad().getTipoEspecialidad()).build())
 						.build();
 
-				Veterinario saveVeterinario = iVeterinarioRepository.save(veterinario);
+				VeterinarioElastic saveVeterinario = iVeterinarioRepository.save(veterinario);
 
 				if (saveVeterinario != null) {
 					responsePojo.setData(saveVeterinario);
@@ -133,11 +142,11 @@ public class VeterinariosServiceImpl implements IVeterinarioService {
 
 	@Override
 	@Transactional
-	public ResponsePojo updateVeterinarioPatch(VeterinariosRequestPojo veterinariosRequestPojo, Long veterinarioId) {
-		Optional<Veterinario> optionalVeterinario = iVeterinarioRepository.findById(veterinarioId);
+	public ResponsePojo updateVeterinarioPatch(VeterinariosRequestPojo veterinariosRequestPojo, String id) {
+		Optional<VeterinarioElastic> optionalVeterinario = iVeterinarioRepository.findById(id);
 
 		if (optionalVeterinario.isPresent()) {
-			Veterinario veterinario = optionalVeterinario.get();
+			VeterinarioElastic veterinario = optionalVeterinario.get();
 
 
 			if (veterinariosRequestPojo.getPrimerNombreVet() != null) {
@@ -155,12 +164,12 @@ public class VeterinariosServiceImpl implements IVeterinarioService {
 			if (veterinariosRequestPojo.getEspecialidad() != null &&
 					veterinariosRequestPojo.getEspecialidad().getEspecialidadId() != null &&
 					!veterinariosRequestPojo.getEspecialidad().getEspecialidadId().equals(0)) {
-				veterinario.setEspecialidadId(Especialidad.builder()
+				veterinario.setEspecialidad(Especialidad.builder()
 						.especialidadId(veterinariosRequestPojo.getEspecialidad().getEspecialidadId())
 						.build());
 			}
 
-			Veterinario saveVeterinario = iVeterinarioRepository.save(veterinario);
+			VeterinarioElastic saveVeterinario = iVeterinarioRepository.save(veterinario);
 
 			if (saveVeterinario != null) {
 				responsePojo.setData(saveVeterinario);
@@ -174,12 +183,12 @@ public class VeterinariosServiceImpl implements IVeterinarioService {
 	}
 
 	@Override
-	public ResponsePojo deleteVeterinario(Long veterinarioId) {
+	public ResponsePojo deleteVeterinario(String id) {
 
-		if(veterinarioId!= null ){
-			Optional<Veterinario> existVet = iVeterinarioRepository.findById(veterinarioId);
+		if(id!= null ){
+			Optional<VeterinarioElastic> existVet = iVeterinarioRepository.findById(id);
 			if (existVet.isPresent()){
-			iVeterinarioRepository.deleteById(veterinarioId);
+			iVeterinarioRepository.deleteById(existVet.get());
 			responsePojo.setMessages(ResponseMessageEnum.MESSAGE_OK_ENUM.getMessages());
 			responsePojo.setData(null);}
 		else{
@@ -193,9 +202,11 @@ public class VeterinariosServiceImpl implements IVeterinarioService {
 
 	@Override
 	public ResponsePojo getListarTodo(String buscar) {
-		List<BuscarTodosLab> respuesta = iVeterinarioRepository.listBuscarTodoVet(buscar);
+		List<VeterinarioElastic> respuesta = iVeterinarioRepository.listBuscarTodoVet(buscar);
 		if (respuesta.isEmpty()){
             responsePojo.setMessages(ResponseMessageEnum.MESSAGE_ERROR_NOT_FOUND_ENUM.getMessages());
+            responsePojo.setData(null);
+
         }else{
                 responsePojo.setMessages(ResponseMessageEnum.MESSAGE_OK_ENUM.getMessages());
                 responsePojo.setData(respuesta);

@@ -12,7 +12,7 @@ import java.io.Serializable;
 public class VeterinariosRequestPojo implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    private String id;
     private Long veterinarioId;
     private String primerNombreVet;
     private String segundoNombreVet;

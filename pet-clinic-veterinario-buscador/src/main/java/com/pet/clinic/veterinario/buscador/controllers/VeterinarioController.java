@@ -3,8 +3,10 @@ package com.pet.clinic.veterinario.buscador.controllers;
 
 
 import com.pet.clinic.veterinario.buscador.pojos.VeterinariosRequestPojo;
-import jakarta.websocket.server.PathParam;
 import lombok.AllArgsConstructor;
+
+import javax.websocket.server.PathParam;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -73,7 +75,7 @@ public class VeterinarioController {
     public ResponseEntity<ResponsePojo> getVeterinario(@RequestParam("veterinarioId") String veterinarioId){
 
         ResponseEntity<ResponsePojo> responsePojoResponseEntity = null;
-        responsePojo = iVeterinarioService.findVeterinarioById(Long.parseLong(veterinarioId));
+        responsePojo = iVeterinarioService.findVeterinarioById(veterinarioId);
         try {
             if (responsePojo.getMessages().equals(ResponseMessageEnum.MESSAGE_OK_ENUM.getMessages())) {
                 responsePojoResponseEntity = ResponseEntity.status(HttpStatus.FOUND).body(responsePojo);
@@ -132,7 +134,7 @@ public class VeterinarioController {
     @PatchMapping("/{veterinarioId}")
     public ResponseEntity<ResponsePojo> updateVeterinarioPatch(
             @RequestBody VeterinariosRequestPojo veterinarioRequestPojo,
-            @PathVariable Long veterinarioId) {
+            @PathVariable String veterinarioId) {
 
         ResponseEntity<ResponsePojo> responsePojoResponseEntity = null;
         responsePojo = iVeterinarioService.updateVeterinarioPatch(veterinarioRequestPojo, veterinarioId);
@@ -156,7 +158,7 @@ public class VeterinarioController {
 
     @PutMapping ("/{VeterinarioId}")
     public ResponseEntity<ResponsePojo> updateVeterinario(@RequestBody VeterinariosRequestPojo veterinariosRequestPojo,
-                                                            @PathVariable Long VeterinarioId){
+                                                            @PathVariable String VeterinarioId){
         ResponseEntity<ResponsePojo>responsePojoResponseEntity = null;
         try{
             responsePojo = iVeterinarioService.findVeterinarioById(VeterinarioId);
@@ -177,8 +179,8 @@ public class VeterinarioController {
         return responsePojoResponseEntity;
     }
 
-    @DeleteMapping("/")
-    public ResponseEntity<ResponsePojo> eliminarVeterinario(@PathParam("veterinarioId") Long veterinarioId) {
+    @DeleteMapping("/{veterinarioId}")
+    public ResponseEntity<ResponsePojo> eliminarVeterinario(@PathVariable String veterinarioId) {
 
         ResponseEntity<ResponsePojo> responsePojoResponseEntity = null;
 
