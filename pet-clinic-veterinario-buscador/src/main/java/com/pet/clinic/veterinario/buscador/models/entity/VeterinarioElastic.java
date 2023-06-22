@@ -16,7 +16,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-@Document(indexName = "veterinaries", createIndex = true)
+@Document(indexName = "specialties", createIndex = true)
 @Builder
 @Getter
 @Setter
@@ -36,6 +36,6 @@ public class VeterinarioElastic {
 	@Field(type = FieldType.Text, name = "segundoApellidoVet")
 	private String segundoApellidoVet;
 	@Field(type = FieldType.Object, name = "especialidad")
-	private Especialidad especialidad;
+	private EspecialidadElastic especialidad;
 
 }

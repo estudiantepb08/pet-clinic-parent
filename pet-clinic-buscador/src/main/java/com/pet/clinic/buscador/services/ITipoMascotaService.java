@@ -8,4 +8,6 @@ import java.util.List;
 public interface ITipoMascotaService {
 
     ResponsePojo getTipoDeMascota();
+    
+    ResponsePojo findByid(String id);
 }

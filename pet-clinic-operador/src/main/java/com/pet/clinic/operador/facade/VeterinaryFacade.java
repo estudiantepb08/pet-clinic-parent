@@ -19,7 +19,7 @@ public class VeterinaryFacade {
 
 	   @Value("${veterinary.url}")
 	    private String veterinaryUrl;
-	    public ResponseMsBuscador getVeterinary(Long veterinarioId) {
+	    public ResponseMsBuscador getVeterinary(String veterinarioId) {
 	        HttpHeaders headers = new HttpHeaders();
 	        HttpEntity<?> requestEntity = new HttpEntity<>(headers);
 

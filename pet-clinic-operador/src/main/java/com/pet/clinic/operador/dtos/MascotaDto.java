@@ -15,7 +15,7 @@ import java.util.Date;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class MascotaDto {
 
-    private Long mascotasId;
+    private String mascotasId;
     private String nombreMascota;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fechaNacimiento;

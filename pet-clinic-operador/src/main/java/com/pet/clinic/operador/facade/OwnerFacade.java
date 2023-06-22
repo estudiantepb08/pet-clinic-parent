@@ -20,7 +20,7 @@ public class OwnerFacade {
 	    @Value("${owner.url}")
 	    private String ownerUrl;
 
-	    public ResponseMsBuscador getOwner(Long propietarioId) {
+	    public ResponseMsBuscador getOwner(String propietarioId) {
 	        HttpHeaders headers = new HttpHeaders();
 	        HttpEntity<?> requestEntity = new HttpEntity<>(headers);
 

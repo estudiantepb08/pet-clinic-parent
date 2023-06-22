@@ -6,8 +6,8 @@ import com.pet.clinic.buscador.pojos.ResponsePojo;
 public interface IPropietarioService {
     ResponsePojo getListPropietario();
 
-    ResponsePojo findPropietarioById(Long propietarioId);
+    ResponsePojo findPropietarioById(String propietarioId);
     ResponsePojo savePropietario(PropietarioRequestPojo propietarioRequestPojo);
-    ResponsePojo updatePropietario(PropietarioRequestPojo propietarioRequestPojo, Long propietarioId);
-    ResponsePojo deletePropietario(Long propietarioId);
+    ResponsePojo updatePropietario(PropietarioRequestPojo propietarioRequestPojo, String propietarioId);
+    ResponsePojo deletePropietario(String propietarioId);
 }

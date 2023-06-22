@@ -4,8 +4,12 @@ import com.pet.clinic.buscador.enums.ResponseMessageEnum;
 import com.pet.clinic.buscador.pojos.MascotaRequestPojo;
 import com.pet.clinic.buscador.pojos.ResponsePojo;
 import com.pet.clinic.buscador.services.IMascotaService;
-import jakarta.websocket.server.PathParam;
+import com.pet.clinic.buscador.services.ITipoMascotaService;
+
 import lombok.AllArgsConstructor;
+
+import javax.websocket.server.PathParam;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -21,6 +25,7 @@ public class MascotaController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MascotaController.class);
     private IMascotaService iMascotaService;
+    private ITipoMascotaService iTipoMascotaService;
     private ResponsePojo responsePojo;
 
     @GetMapping("/mascotas")
@@ -42,12 +47,30 @@ public class MascotaController {
         }
         return responsePojoResponseEntity;
     }
+    @GetMapping("/tipoMascotas")
+    public ResponseEntity<ResponsePojo> obtenerTipoMascotas(){
 
+        ResponseEntity<ResponsePojo> responsePojoResponseEntity = null;
+        responsePojo = iTipoMascotaService.getTipoDeMascota();
+        try {
+            if (responsePojo.getData() != null) {
+                responsePojoResponseEntity = ResponseEntity.status(HttpStatus.FOUND).body(responsePojo);
+            } else {
+                responsePojoResponseEntity = ResponseEntity.status(HttpStatus.NO_CONTENT).body(responsePojo);
+            }
+        }catch (Exception e){
+            LOGGER.error("Error List Mascota: ", e.getCause().getMessage());
+            responsePojoResponseEntity = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }finally {
+            LOGGER.info("getMascotas");
+        }
+        return responsePojoResponseEntity;
+    }
     @GetMapping("/mascotas/{mascotaId}")
     public ResponseEntity<ResponsePojo> getMascotaPorId(@PathVariable String mascotaId){
 
         ResponseEntity<ResponsePojo> responsePojoResponseEntity = null;
-        responsePojo = iMascotaService.findMascotaById(Long.parseLong(mascotaId));
+        responsePojo = iMascotaService.findMascotaById(mascotaId);
         try{
             if (responsePojo.getMessages().equals(ResponseMessageEnum.MESSAGE_OK_ENUM.getMessages())){
                 responsePojoResponseEntity = ResponseEntity.status(HttpStatus.FOUND).body(responsePojo);
@@ -85,7 +108,7 @@ public class MascotaController {
 
     @PutMapping("/mascotas/numero/{mascotaId}")
     public ResponseEntity<ResponsePojo> updateMascota(@RequestBody MascotaRequestPojo mascotaRequestPojo,
-                                                      @PathVariable Long mascotaId){
+                                                      @PathVariable String mascotaId){
         ResponseEntity<ResponsePojo> responsePojoResponseEntity = null;
         try{
             ResponsePojo responsePojoMasco = iMascotaService.findMascotaById(mascotaId);
@@ -112,7 +135,7 @@ public class MascotaController {
     }
 
     @DeleteMapping("/mascotas/{mascotaId}")
-    public ResponseEntity<ResponsePojo> eliminarMascota(@PathVariable Long mascotaId){
+    public ResponseEntity<ResponsePojo> eliminarMascota(@PathVariable String mascotaId){
 
         ResponseEntity<ResponsePojo> responsePojoResponseEntity = null;
 

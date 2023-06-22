@@ -22,7 +22,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class EspecialidadElastic {
 	 @Id
-     private String id;
+     private String especialidadId;
 	@Field(type = FieldType.Integer, name = "codigoEspecialidad")
      private Integer codigoEspecialidad;
  	@Field(type = FieldType.Text, name = "tipoEspecialidad")

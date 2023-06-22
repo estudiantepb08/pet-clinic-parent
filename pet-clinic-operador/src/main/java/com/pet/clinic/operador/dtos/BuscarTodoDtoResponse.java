@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BuscarTodoDtoResponse {
-	Long ownerId;
-	Long petId;
+	String ownerId;
+	String petId;
 	String primerNombre;
     String segundoNombre;
     String primerApellido;

@@ -55,7 +55,7 @@ public class VisitMapperSearch {
 		return visitsResponse;
 	}
 	
-	private static BuscarTodoDtoResponse matchData(List<ResponseMsBuscador> dataMs, Long ownerId, Long petId ) {
+	private static BuscarTodoDtoResponse matchData(List<ResponseMsBuscador> dataMs, String ownerId, String petId ) {
 		for (Object response : dataMs) {
 		    Object data = ((ResponseMsBuscador) response).getData();
 		    if (data instanceof ArrayList) {
@@ -65,18 +65,19 @@ public class VisitMapperSearch {
 
 		            String nombreMascota = (String) dataMap.get("nombreMascota");
 		            String correoElectronico = (String) dataMap.get("correoElectronico");
-		            String direccion = (String) dataMap.get("direccion");
-		            String telefono = (String) dataMap.get("telefono");
-		            String tipoMascota = (String) dataMap.get("tipoMascota");
+		            Map<String, Object> dataMapPropietario = (Map<String, Object>) dataMap.get("propietario");
+		            String direccion = (String) dataMapPropietario.get("direccion");
+		            String telefono = (String) dataMapPropietario.get("telefono");
+		            Map<String, Object> dataMapTipoMascota = (Map<String, Object>) dataMap.get("tipoMascota");
+
+		            String tipoMascota = (String) dataMapTipoMascota.get("tipoMascota");
 		            String fechaNacimiento = (String) dataMap.get("fechaNacimiento");
-		            String primerNombre = (String) dataMap.get("primerNombre");
-		            String segundoNombre = (String) dataMap.get("segundoNombre");
-		            String primerApellido = (String) dataMap.get("primerApellido");
-		            String segundoApellido = (String) dataMap.get("segundoApellido");
-		            Integer ownerIdInteger = (Integer) dataMap.get("propietariosId");
-		            Long ownerIdLong = ownerIdInteger.longValue();
-		            Integer petInteger = (Integer) dataMap.get("mascotasId");
-		            Long petIdLong = petInteger.longValue();
+		            String primerNombre = (String) dataMapPropietario.get("primerNombre");
+		            String segundoNombre = (String) dataMapPropietario.get("segundoNombre");
+		            String primerApellido = (String) dataMapPropietario.get("primerApellido");
+		            String segundoApellido = (String) dataMapPropietario.get("segundoApellido");
+		            String ownerIdLong = (String) dataMapPropietario.get("id");
+		            String petIdLong = (String) dataMap.get("id");
 		            if (ownerId.equals(ownerId) && petIdLong.equals(petId)) {
 		                return new BuscarTodoDtoResponse(ownerIdLong, petIdLong, primerNombre, segundoNombre, primerApellido,segundoApellido,
 		                		telefono,direccion,correoElectronico,nombreMascota,fechaNacimiento,tipoMascota);
@@ -86,7 +87,7 @@ public class VisitMapperSearch {
 		}
 		return null;
 	}
-	private static BuscarVeterinariosDto matchDataVeterinary(List<ResponseMsBuscador> dataMs, Long veterinaryId ) {
+	private static BuscarVeterinariosDto matchDataVeterinary(List<ResponseMsBuscador> dataMs, String veterinaryId ) {
 		for (Object response : dataMs) {
 		    Object data = ((ResponseMsBuscador) response).getData();
 		    	if(data instanceof List) {
@@ -100,8 +101,7 @@ public class VisitMapperSearch {
 		    			String segundoApellidovet = (String) dataMap.get("segundoApellidoVet");
 		    			String primerNombrevet = (String) dataMap.get("primerNombreVet");
 		    			
-		    			Integer veterinaryIdInteger = (Integer) dataMap.get("veterinarioId");
-		    			Long veterinaryIdLong = veterinaryIdInteger.longValue();
+		    			String veterinaryIdLong = (String) dataMap.get("id");
 		    			if (veterinaryIdLong.equals(veterinaryId)) {
 		    				return new BuscarVeterinariosDto(veterinaryIdLong, primerNombrevet, segundoNombrevet,
 		    						primerApellidovet, segundoApellidovet);
@@ -114,8 +114,7 @@ public class VisitMapperSearch {
 		            String segundoApellidovet = (String) dataMap.get("segundoApellidoVet");
 		            String primerNombrevet = (String) dataMap.get("primerNombreVet");
 
-		            Integer veterinaryIdInteger = (Integer) dataMap.get("veterinarioId");
-		            Long veterinaryIdLong = veterinaryIdInteger.longValue();
+		            String veterinaryIdLong = (String) dataMap.get("id");
 		            if (veterinaryIdLong.equals(veterinaryId)) {
 		                return new BuscarVeterinariosDto(veterinaryIdLong, primerNombrevet, segundoNombrevet,
 		                		primerApellidovet, segundoApellidovet);

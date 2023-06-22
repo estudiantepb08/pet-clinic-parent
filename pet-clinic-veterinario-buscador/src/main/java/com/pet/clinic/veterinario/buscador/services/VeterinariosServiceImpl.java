@@ -4,6 +4,7 @@ import com.pet.clinic.veterinario.buscador.enums.ResponseMessageEnum;
 import com.pet.clinic.veterinario.buscador.models.dto.BuscarTodosLab;
 import com.pet.clinic.veterinario.buscador.models.dto.VeterinarioDto;
 import com.pet.clinic.veterinario.buscador.models.entity.Especialidad;
+import com.pet.clinic.veterinario.buscador.models.entity.EspecialidadElastic;
 import com.pet.clinic.veterinario.buscador.models.entity.Veterinario;
 import com.pet.clinic.veterinario.buscador.models.entity.VeterinarioElastic;
 import com.pet.clinic.veterinario.buscador.pojos.EspecialidadRequestPojo;
@@ -52,11 +53,13 @@ public class VeterinariosServiceImpl implements IVeterinarioService {
 
 	@Override
 	public ResponsePojo findVeterinarioById(String veterinarioId) {
+		this.veterinarios = new ArrayList<>();
 
 		Optional<VeterinarioElastic> optionalVeterionario = iVeterinarioRepository.findById(veterinarioId); // pendiente repository
 		if (optionalVeterionario.isPresent()) {
+			this.veterinarios.add(optionalVeterionario.get());
 			responsePojo.setMessages(ResponseMessageEnum.MESSAGE_OK_ENUM.getMessages());
-			responsePojo.setData(optionalVeterionario.get());
+			responsePojo.setData(this.veterinarios);
 		} else {
 			responsePojo.setMessages(ResponseMessageEnum.MESSAGE_ERROR_NOT_FOUND_ENUM.getMessages());
 		}
@@ -84,7 +87,7 @@ public class VeterinariosServiceImpl implements IVeterinarioService {
 						.segundoNombreVet(veterinariosRequestPojo.getSegundoNombreVet().trim())
 						.primerApellidoVet(veterinariosRequestPojo.getPrimerApellidoVet().trim())
 						.segundoApellidoVet(veterinariosRequestPojo.getSegundoApellidoVet().trim())
-						.especialidad(Especialidad.builder().codigoEspecialidad(veterinariosRequestPojo.getEspecialidad().getCodigoEspecialidad())
+						.especialidad(EspecialidadElastic.builder().codigoEspecialidad(veterinariosRequestPojo.getEspecialidad().getCodigoEspecialidad())
 								.descripcionTipo(veterinariosRequestPojo.getEspecialidad().getDescripcionTipo()).tipoEspecialidad(veterinariosRequestPojo.getEspecialidad().getTipoEspecialidad()).build())
 						.build();
 					VeterinarioElastic saveVeterinario = iVeterinarioRepository.save(veterinario);
@@ -120,7 +123,7 @@ public class VeterinariosServiceImpl implements IVeterinarioService {
 						.segundoNombreVet(veterinariosRequestPojo.getSegundoNombreVet().trim())
 						.primerApellidoVet(veterinariosRequestPojo.getPrimerApellidoVet().trim())
 						.segundoApellidoVet(veterinariosRequestPojo.getSegundoApellidoVet().trim())
-						.especialidad(Especialidad.builder().codigoEspecialidad(veterinariosRequestPojo.getEspecialidad().getCodigoEspecialidad())
+						.especialidad(EspecialidadElastic.builder().codigoEspecialidad(veterinariosRequestPojo.getEspecialidad().getCodigoEspecialidad())
 								.descripcionTipo(veterinariosRequestPojo.getEspecialidad().getDescripcionTipo()).tipoEspecialidad(veterinariosRequestPojo.getEspecialidad().getTipoEspecialidad()).build())
 						.build();
 
@@ -164,7 +167,7 @@ public class VeterinariosServiceImpl implements IVeterinarioService {
 			if (veterinariosRequestPojo.getEspecialidad() != null &&
 					veterinariosRequestPojo.getEspecialidad().getEspecialidadId() != null &&
 					!veterinariosRequestPojo.getEspecialidad().getEspecialidadId().equals(0)) {
-				veterinario.setEspecialidad(Especialidad.builder()
+				veterinario.setEspecialidad(EspecialidadElastic.builder()
 						.especialidadId(veterinariosRequestPojo.getEspecialidad().getEspecialidadId())
 						.build());
 			}

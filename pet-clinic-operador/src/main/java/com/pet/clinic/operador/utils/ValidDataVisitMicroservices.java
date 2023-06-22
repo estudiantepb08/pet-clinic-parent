@@ -19,7 +19,7 @@ public class ValidDataVisitMicroservices {
 	
 	@Autowired
 	VeterinaryFacade veterinaryFacade;
-	public  Boolean ValidData(Long idPet, Long idOwner, Long idVeterinary){
+	public  Boolean ValidData(String idPet, String idOwner, String idVeterinary){
 		ResponseMsBuscador responsePet = petFacade.getPet(idPet);
 
 		if (responsePet == null){

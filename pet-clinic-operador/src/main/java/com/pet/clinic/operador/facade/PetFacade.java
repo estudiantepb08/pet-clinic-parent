@@ -25,7 +25,7 @@ public class PetFacade {
 	    @Value("${pet.url}")
 	    private String petUrl;
 	    
-	    public ResponseMsBuscador getPet(Long mascotaId) {
+	    public ResponseMsBuscador getPet(String mascotaId) {
 	        HttpHeaders headers = new HttpHeaders();
 	        HttpEntity<?> requestEntity = new HttpEntity<>(headers);
 

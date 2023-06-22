@@ -76,7 +76,7 @@ public class PropietarioController {
         ResponseEntity<ResponsePojo> responsePojoResponseEntity = null;
        // responsePojo = null;
         try {
-            responsePojo = iPropietarioService.findPropietarioById(Long.parseLong(propietarioId));
+            responsePojo = iPropietarioService.findPropietarioById(propietarioId);
 
             if (responsePojo.getMessages().equals(ResponseMessageEnum.MESSAGE_OK_ENUM.getMessages())) {
                 responsePojoResponseEntity = ResponseEntity.status(HttpStatus.FOUND).body(responsePojo);
@@ -117,7 +117,7 @@ public class PropietarioController {
 
     @PutMapping("/propietarios/numero/{requestPropietarioId}")
     public ResponseEntity<ResponsePojo> updatePropietario(@RequestBody PropietarioRequestPojo propietarioRequestPojo,
-                                                          @PathVariable Long requestPropietarioId){
+                                                          @PathVariable String requestPropietarioId){
 
         ResponseEntity<ResponsePojo> responsePojoResponseEntity = null;
         try{
@@ -140,7 +140,7 @@ public class PropietarioController {
     }
 
     @DeleteMapping("/propietarios/{propietarioId}")
-    public ResponseEntity<ResponsePojo> eliminarPropietario(@PathVariable Long propietarioId){
+    public ResponseEntity<ResponsePojo> eliminarPropietario(@PathVariable String propietarioId){
 
         ResponseEntity<ResponsePojo> responsePojoResponseEntity = null;
         try{

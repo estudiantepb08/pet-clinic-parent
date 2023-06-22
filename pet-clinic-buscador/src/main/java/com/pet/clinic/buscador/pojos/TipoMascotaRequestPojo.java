@@ -11,7 +11,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class TipoMascotaRequestPojo implements Serializable {
 
-    private Long tipoMascotasId;
+    private String id;
     private Integer codigoTipo;
     private String tipoMascota;
     private String descripcionTipo;

@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface IMascotaService {
     ResponsePojo getMascota();
-    ResponsePojo findMascotaById(Long mascotaId);
+    ResponsePojo findMascotaById(String mascotaId);
     ResponsePojo saveMascota(MascotaRequestPojo mascota);
-    ResponsePojo updateMascota(MascotaRequestPojo mascota, Long mascotaId);
-    Boolean deleteMascota(Long mascotaId);
+    ResponsePojo updateMascota(MascotaRequestPojo mascota, String mascotaId);
+    Boolean deleteMascota(String mascotaId);
     ResponsePojo getListarTodo(String buscar);
 }

@@ -37,13 +37,13 @@ public class VisitModel {
 	private LocalDateTime dateVisit;
 	
 	@Column(nullable = false)	
-	private Long idPet;
+	private String idPet;
 	
 	@Column(nullable = false)	
-	private Long idOwner;
+	private String idOwner;
 	
 	@Column(nullable = false)	
-	private Long idVeterinary;
+	private String idVeterinary;
 	
 	@Column(nullable = false)	
 	private String reason;

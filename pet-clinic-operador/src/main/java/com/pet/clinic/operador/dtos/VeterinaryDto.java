@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class VeterinaryDto {
-	        private Long veterinarioId;
+	        private String veterinarioId;
 	        private String primerNombreVet;
 	        private String segundoNombreVet;
 	        private String primerApellidoVet;

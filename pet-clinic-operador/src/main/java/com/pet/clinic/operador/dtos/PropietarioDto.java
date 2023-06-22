@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class PropietarioDto {
 
     
-    private Long propietariosId;
+    private String propietariosId;
     
     private String primerNombre;
     private String segundoNombre;

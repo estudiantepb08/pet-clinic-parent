@@ -19,7 +19,7 @@ import java.util.Date;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class MascotaRequestPojo implements Serializable {
 
-    private Long mascotasId;
+    private String mascotasId;
     private String nombreMascota;
     private Date fechaNacimiento;
     private TipoMascotaRequestPojo tipoMascota;

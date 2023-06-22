@@ -2,10 +2,11 @@ package com.pet.clinic.buscador.models.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "contactos")

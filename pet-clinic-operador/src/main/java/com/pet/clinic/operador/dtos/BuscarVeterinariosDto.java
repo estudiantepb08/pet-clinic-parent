@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BuscarVeterinariosDto {
-    	Long veterinarioId;
+    	String veterinarioId;
 	 	String primerNombrevet;
 	    String segundoNombrevet;
 	    String primerApellidovet;
