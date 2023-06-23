@@ -1,7 +1,7 @@
 package com.pet.clinic.buscador.pojos;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import javax.validation.constraints.*;
+import jakarta.validation.constraints.*;
 import lombok.*;
 import org.springframework.web.context.annotation.RequestScope;
 

@@ -9,7 +9,7 @@ import org.springframework.web.context.annotation.RequestScope;
 
 import java.io.Serializable;
 
-import javax.validation.constraints.*;
+import jakarta.validation.constraints.*;
 
 @Builder
 @Getter

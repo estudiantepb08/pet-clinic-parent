@@ -8,7 +8,7 @@ import com.pet.clinic.buscador.services.ITipoMascotaService;
 
 import lombok.AllArgsConstructor;
 
-import javax.websocket.server.PathParam;
+import jakarta.websocket.server.PathParam;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

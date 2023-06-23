@@ -2,7 +2,7 @@ package com.pet.clinic.buscador.models.entity;
 
 import java.util.Date;
 
-import javax.persistence.Id;
+import jakarta.persistence.Id;
 
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;

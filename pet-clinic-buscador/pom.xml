@@ -95,6 +95,10 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
+				      <version>3.11.0</version>
+				       <source>17</source>
+        				<target>17</target>
+        				    <skipTests>true</skipTests>        		
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>

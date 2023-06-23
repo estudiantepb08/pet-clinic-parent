@@ -6,7 +6,7 @@ import lombok.*;
 
 import java.io.Serializable;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "contactos")

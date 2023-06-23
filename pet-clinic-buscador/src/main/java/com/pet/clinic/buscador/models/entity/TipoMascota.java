@@ -1,7 +1,7 @@
 package com.pet.clinic.buscador.models.entity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import javax.persistence.*;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
