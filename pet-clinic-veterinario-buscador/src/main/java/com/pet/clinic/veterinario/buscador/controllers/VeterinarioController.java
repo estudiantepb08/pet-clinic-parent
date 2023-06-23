@@ -5,7 +5,7 @@ package com.pet.clinic.veterinario.buscador.controllers;
 import com.pet.clinic.veterinario.buscador.pojos.VeterinariosRequestPojo;
 import lombok.AllArgsConstructor;
 
-import javax.websocket.server.PathParam;
+import jakarta.websocket.server.PathParam;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

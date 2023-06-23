@@ -2,7 +2,7 @@ package com.pet.clinic.veterinario.buscador.models.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import javax.persistence.*;
+import jakarta.persistence.*;
 import lombok.*;
 import java.io.Serializable;
 
