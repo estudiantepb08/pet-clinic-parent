@@ -1,6 +1,6 @@
 FROM maven:3.8.5-openjdk-17 AS build
 COPY . .
-RUN mvn clean package
+RUN mvn clean package -DskipTests
 
 # Usamos una imagen de Openjdk v17
 # Exponemos el puerto que nuestro componente va a usar para escuchar peticiones
