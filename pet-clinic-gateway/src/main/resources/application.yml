@@ -4,7 +4,7 @@ server:
 ## Configuracion del registro en eureka server
 eureka:
   instance:
-    preferIpAddress: true
+    preferIpAddress: false
     hostname: ${HOSTNAME:localhost}
     non-secure-port-enable: false
     secure-port-enable: true
