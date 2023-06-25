@@ -1,7 +1,6 @@
 package com.pet.clinic.buscador.pojos;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import jakarta.validation.constraints.*;
 import lombok.*;
 import org.springframework.web.context.annotation.RequestScope;
 
@@ -18,23 +17,14 @@ public class PropietarioRequestPojo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @NotBlank
     private String id;
-    @NotBlank
+    
     private Long propietariosId;
-    @NotBlank
-    @Size(min = 3, max = 20)
+    
     private String primerNombre;
-    @NotBlank
-    @Size(min = 3, max = 20)
+    
     private String segundoNombre;
-    @NotBlank
-    @Size(min = 3, max = 20)
     private String primerApellido;
-    @NotBlank
-    @Size(min = 3, max = 20)
     private String segundoApellido;
-    @NotBlank
-    @Size(min = 3, max = 20)
     private ContactoRequestPojo contacto;
 }

@@ -8,8 +8,6 @@ import com.pet.clinic.buscador.services.ITipoMascotaService;
 
 import lombok.AllArgsConstructor;
 
-import jakarta.websocket.server.PathParam;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -159,7 +157,7 @@ public class MascotaController {
     }
 
     @GetMapping("/mascotas/buscar-todo")
-    public ResponseEntity<ResponsePojo> getListBuscarTodo(@PathParam("buscar") String buscar){
+    public ResponseEntity<ResponsePojo> getListBuscarTodo(@RequestParam("buscar") String buscar){
         ResponseEntity<ResponsePojo> responsePojoResponseEntity = null;
         try{
             responsePojo = iMascotaService.getListarTodo(buscar);

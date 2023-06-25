@@ -1,28 +1,18 @@
 package com.pet.clinic.veterinario.buscador.services;
 
 import com.pet.clinic.veterinario.buscador.enums.ResponseMessageEnum;
-import com.pet.clinic.veterinario.buscador.models.dto.BuscarTodosLab;
-import com.pet.clinic.veterinario.buscador.models.dto.VeterinarioDto;
-import com.pet.clinic.veterinario.buscador.models.entity.Especialidad;
 import com.pet.clinic.veterinario.buscador.models.entity.EspecialidadElastic;
-import com.pet.clinic.veterinario.buscador.models.entity.Veterinario;
 import com.pet.clinic.veterinario.buscador.models.entity.VeterinarioElastic;
-import com.pet.clinic.veterinario.buscador.pojos.EspecialidadRequestPojo;
 import com.pet.clinic.veterinario.buscador.pojos.VeterinariosRequestPojo;
 import com.pet.clinic.veterinario.buscador.pojos.ResponsePojo;
 import com.pet.clinic.veterinario.buscador.repository.DataAccessRepository;
-import com.pet.clinic.veterinario.buscador.repository.IVererinarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
-
-import jakarta.transaction.Transactional;
-
 @Service
 public class VeterinariosServiceImpl implements IVeterinarioService {
     
@@ -104,7 +94,6 @@ public class VeterinariosServiceImpl implements IVeterinarioService {
 	}
 
 	@Override
-	@Transactional
 	public ResponsePojo updateVeterinario(VeterinariosRequestPojo veterinariosRequestPojo, String veterinarioId) {
 
 		Optional<VeterinarioElastic> optionalVeterionarioup = iVeterinarioRepository.findById(veterinarioId);
@@ -144,7 +133,6 @@ public class VeterinariosServiceImpl implements IVeterinarioService {
 	}
 
 	@Override
-	@Transactional
 	public ResponsePojo updateVeterinarioPatch(VeterinariosRequestPojo veterinariosRequestPojo, String id) {
 		Optional<VeterinarioElastic> optionalVeterinario = iVeterinarioRepository.findById(id);
 

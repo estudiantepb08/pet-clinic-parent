@@ -5,10 +5,10 @@ package com.pet.clinic.veterinario.buscador.controllers;
 import com.pet.clinic.veterinario.buscador.pojos.VeterinariosRequestPojo;
 import lombok.AllArgsConstructor;
 
-import jakarta.websocket.server.PathParam;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,10 +25,11 @@ public class VeterinarioController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(VeterinarioController.class);
 
-    private IEspecialidadService iEspecialidadService;
+    @Autowired
     private IVeterinarioService iVeterinarioService;
+    @Autowired
     private ResponsePojo responsePojo;
-
+/*
     @GetMapping("/especialidades")
     public ResponseEntity<ResponsePojo> getEspecialidades(){
 
@@ -48,7 +49,7 @@ public class VeterinarioController {
             LOGGER.info("getEspecialidad");
         }
         return responsePojoResponseEntity;
-    }
+    }*/
 
 
 
@@ -71,8 +72,8 @@ public class VeterinarioController {
         return responsePojoResponseEntity;
     }
 
-    @GetMapping("/veterinario")
-    public ResponseEntity<ResponsePojo> getVeterinario(@RequestParam("veterinarioId") String veterinarioId){
+    @GetMapping("/veterinario/{veterinarioId}")
+    public ResponseEntity<ResponsePojo> getVeterinario(@PathVariable("veterinarioId") String veterinarioId){
 
         ResponseEntity<ResponsePojo> responsePojoResponseEntity = null;
         responsePojo = iVeterinarioService.findVeterinarioById(veterinarioId);
@@ -92,7 +93,7 @@ public class VeterinarioController {
     }
 
     @GetMapping("/veterinario/todos")
-    public ResponseEntity<ResponsePojo> getListBuscarTodo(@PathParam("buscar") String buscar){
+    public ResponseEntity<ResponsePojo> getListBuscarTodo(@RequestParam("buscar") String buscar){
         ResponseEntity<ResponsePojo> responsePojoResponseEntity = null;
         try{
             responsePojo = iVeterinarioService.getListarTodo(buscar);

@@ -1,28 +1,21 @@
 package com.pet.clinic.buscador.services;
 
 import com.pet.clinic.buscador.enums.ResponseMessageEnum;
-import com.pet.clinic.buscador.models.dtos.BuscarTodoDto;
-import com.pet.clinic.buscador.models.dtos.MascotaDto;
-import com.pet.clinic.buscador.models.entity.Mascota;
 import com.pet.clinic.buscador.models.entity.MascotaElastic;
-import com.pet.clinic.buscador.models.entity.Propietario;
 import com.pet.clinic.buscador.models.entity.PropietarioElastic;
-import com.pet.clinic.buscador.models.entity.TipoMascota;
 import com.pet.clinic.buscador.models.entity.TipoMascotaElastic;
 import com.pet.clinic.buscador.pojos.MascotaRequestPojo;
 import com.pet.clinic.buscador.pojos.ResponsePojo;
 import com.pet.clinic.buscador.repository.DataAccessRepositoryOwners;
 import com.pet.clinic.buscador.repository.DataAccessRepositoryPets;
 import com.pet.clinic.buscador.repository.DataAccessRepositoryTypePets;
-import com.pet.clinic.buscador.repository.IMascotaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
+
 
 @Service
 public class MascotaServiceImpl implements IMascotaService{

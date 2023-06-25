@@ -1,7 +1,6 @@
 package com.pet.clinic.buscador.pojos;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.pet.clinic.buscador.models.entity.TipoMascota;
 import lombok.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.RequestScope;

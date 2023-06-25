@@ -47,10 +47,12 @@ public class VisitMapper {
 		for (Object response : responses) {
 		    Object data = ((ResponseMsBuscador) response).getData();
 		            Map<String, Object> dataMap = (Map<String, Object>) data;
+		            Map<String, Object> dataMapTipoMascota = (Map<String, Object>) dataMap.get("tipoMascota");
+
 		            String mascotasId =  (String) dataMap.get("id");
 		            String fechaNacimiento = (String) dataMap.get("fechaNacimiento");
 		            String nombreMascota = (String) dataMap.get("nombreMascota");
-		            String tipoMascota = (String) dataMap.get("tipoMascota.tipoMascota");
+		            String tipoMascota = (String) dataMapTipoMascota.get("tipoMascota");
 		            if (mascotasId.equals(id)) {
 		                return new MascotaDto(mascotasId, nombreMascota, null, tipoMascota);
 		            }

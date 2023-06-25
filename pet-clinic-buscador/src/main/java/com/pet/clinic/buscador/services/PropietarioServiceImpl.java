@@ -1,16 +1,11 @@
 package com.pet.clinic.buscador.services;
 
 import com.pet.clinic.buscador.enums.ResponseMessageEnum;
-import com.pet.clinic.buscador.models.dtos.PropietarioDto;
-import com.pet.clinic.buscador.models.entity.Contacto;
 import com.pet.clinic.buscador.models.entity.ContactoElastic;
-import com.pet.clinic.buscador.models.entity.Propietario;
 import com.pet.clinic.buscador.models.entity.PropietarioElastic;
 import com.pet.clinic.buscador.pojos.PropietarioRequestPojo;
 import com.pet.clinic.buscador.pojos.ResponsePojo;
 import com.pet.clinic.buscador.repository.DataAccessRepositoryOwners;
-import com.pet.clinic.buscador.repository.IContactoRespository;
-import com.pet.clinic.buscador.repository.IPropietarioRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,8 +27,7 @@ public class PropietarioServiceImpl implements IPropietarioService {
 	DataAccessRepositoryOwners iPropietarioRepository;
     @Autowired
     ResponsePojo responsePojo;
-    @Autowired
-    IContactoRespository iContactoRespository;
+
     private List<PropietarioElastic> propietarioDtos;
     @Override
     @Transactional(readOnly = true)
@@ -124,7 +118,6 @@ public class PropietarioServiceImpl implements IPropietarioService {
                     .contactoId(Arrays.asList(contacto)).build();
 
             PropietarioElastic updatePropietario = iPropietarioRepository.save(propietario);
-            Contacto updateContacto = null;
 
         }else{
             responsePojo.setMessages(ResponseMessageEnum.MESSAGE_ERROR_CAMPOS.getMessages());

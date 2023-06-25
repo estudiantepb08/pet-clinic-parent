@@ -2,7 +2,6 @@ package com.pet.clinic.operador.dtos;
 
 import java.time.LocalDateTime;
 
-import org.antlr.v4.runtime.misc.NotNull;
 
 import com.pet.clinic.operador.enums.StatusVisit;
 
