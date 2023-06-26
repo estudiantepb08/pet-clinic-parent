@@ -6,10 +6,10 @@ eureka:
   instance:
     preferIpAddress: false
     hostname: ${HOSTNAME:localhost}
-    non-secure-port-enable: false
-    secure-port-enable: true
-    non-secure-port: 80
-    secure-port: 443
+    #non-secure-port-enable: false
+    #secure-port-enable: true
+    #non-secure-port: 80
+    #secure-port: 443
 
   client:
     registerWithEureka: true
