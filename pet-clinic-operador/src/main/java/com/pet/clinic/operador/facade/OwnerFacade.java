@@ -27,6 +27,7 @@ public class OwnerFacade {
 	        ResponseEntity<ResponseMsBuscador> response = restTemplate.exchange(
 	        		ownerUrl + "/propietarios/" + propietarioId, HttpMethod.GET, requestEntity,
 	                ResponseMsBuscador.class, propietarioId);
+	        System.out.println(response);
 
 	        ResponseMsBuscador responseMsBuscador = response.getBody();
 	        System.out.println(responseMsBuscador);

@@ -26,6 +26,7 @@ public class VeterinaryFacade {
 	        ResponseEntity<ResponseMsBuscador> response = restTemplate.exchange(
 	        		veterinaryUrl + "/veterinario" + "/{veterinarioId}", HttpMethod.GET, requestEntity,
 	                ResponseMsBuscador.class, veterinarioId);
+	        System.out.println(response);
 
 	        ResponseMsBuscador responseMsBuscador = response.getBody();
 	        System.out.println(responseMsBuscador);

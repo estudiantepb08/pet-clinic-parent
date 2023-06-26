@@ -33,6 +33,7 @@ public class PetFacade {
 	        ResponseEntity<ResponseMsBuscador> response = restTemplate.exchange(
 	        		petUrl + "/mascotas/" + mascotaId, HttpMethod.GET, requestEntity,
 	                ResponseMsBuscador.class, mascotaId);
+	        System.out.println(response);
 
 	        ResponseMsBuscador responseMsBuscador = response.getBody();
 	        System.out.println(responseMsBuscador);
