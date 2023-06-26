@@ -34,7 +34,7 @@ public class PetFacade {
 	                ResponseMsBuscador.class, mascotaId);
 
 	        ResponseMsBuscador responseMsBuscador = response.getBody();
-	        
+	        System.out.println(responseMsBuscador);
 	        return responseMsBuscador;
 	    }
 	    

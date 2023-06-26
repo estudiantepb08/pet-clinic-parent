@@ -29,7 +29,8 @@ public class OwnerFacade {
 	                ResponseMsBuscador.class, propietarioId);
 
 	        ResponseMsBuscador responseMsBuscador = response.getBody();
-	        
+	        System.out.println(responseMsBuscador);
+
 	        return responseMsBuscador;
 	    }
 }

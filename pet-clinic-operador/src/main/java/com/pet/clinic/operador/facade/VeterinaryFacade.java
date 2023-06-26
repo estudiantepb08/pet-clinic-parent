@@ -28,7 +28,8 @@ public class VeterinaryFacade {
 	                ResponseMsBuscador.class, veterinarioId);
 
 	        ResponseMsBuscador responseMsBuscador = response.getBody();
-	        
+	        System.out.println(responseMsBuscador);
+
 	        return responseMsBuscador;
 	    }
 	    
