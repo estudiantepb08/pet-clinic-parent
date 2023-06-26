@@ -60,7 +60,7 @@ public class VeterinarioController {
         responsePojo = iVeterinarioService.getVeterinario();
         try {
             if (responsePojo.getMessages().equals(ResponseMessageEnum.MESSAGE_OK_ENUM.getMessages())) {
-                responsePojoResponseEntity = ResponseEntity.status(HttpStatus.FOUND).body(responsePojo);
+                responsePojoResponseEntity = ResponseEntity.status(HttpStatus.OK).body(responsePojo);
             } else {
                 responsePojoResponseEntity = ResponseEntity.status(HttpStatus.NO_CONTENT).body(responsePojo);
             }
@@ -79,7 +79,7 @@ public class VeterinarioController {
         responsePojo = iVeterinarioService.findVeterinarioById(veterinarioId);
         try {
             if (responsePojo.getMessages().equals(ResponseMessageEnum.MESSAGE_OK_ENUM.getMessages())) {
-                responsePojoResponseEntity = ResponseEntity.status(HttpStatus.FOUND).body(responsePojo);
+                responsePojoResponseEntity = ResponseEntity.status(HttpStatus.OK).body(responsePojo);
             } else {
                 responsePojoResponseEntity = ResponseEntity.status(HttpStatus.NO_CONTENT).body(responsePojo);
             }
@@ -98,7 +98,7 @@ public class VeterinarioController {
         try{
             responsePojo = iVeterinarioService.getListarTodo(buscar);
             if (responsePojo.getMessages().equals(ResponseMessageEnum.MESSAGE_OK_ENUM.getMessages())){
-                responsePojoResponseEntity = ResponseEntity.status(HttpStatus.FOUND).body(responsePojo);
+                responsePojoResponseEntity = ResponseEntity.status(HttpStatus.OK).body(responsePojo);
             }else {
                 responsePojoResponseEntity = ResponseEntity.status(HttpStatus.NOT_FOUND).body(responsePojo);
             }

@@ -35,7 +35,7 @@ public class PropietarioController {
              responsePojo = iTipoMascotaService.getTipoDeMascota();
 
              if (responsePojo.getMessages().equals(ResponseMessageEnum.MESSAGE_OK_ENUM.toString())){
-                  responsePojoResponseEntity =  ResponseEntity.status(HttpStatus.FOUND).body(responsePojo);
+                  responsePojoResponseEntity =  ResponseEntity.status(HttpStatus.OK).body(responsePojo);
              }else {
                  responsePojoResponseEntity = ResponseEntity.status(HttpStatus.NO_CONTENT).body(responsePojo);
              }
@@ -57,7 +57,7 @@ public class PropietarioController {
             responsePojo = iPropietarioService.getListPropietario();
 
             if (responsePojo.getMessages().equals(ResponseMessageEnum.MESSAGE_OK_ENUM.getMessages())) {
-                responsePojoResponseEntity = ResponseEntity.status(HttpStatus.FOUND).body(responsePojo);
+                responsePojoResponseEntity = ResponseEntity.status(HttpStatus.OK).body(responsePojo);
             } else {
                 responsePojoResponseEntity = ResponseEntity.status(HttpStatus.NO_CONTENT).body(responsePojo);
             }
@@ -79,7 +79,7 @@ public class PropietarioController {
             responsePojo = iPropietarioService.findPropietarioById(propietarioId);
 
             if (responsePojo.getMessages().equals(ResponseMessageEnum.MESSAGE_OK_ENUM.getMessages())) {
-                responsePojoResponseEntity = ResponseEntity.status(HttpStatus.FOUND).body(responsePojo);
+                responsePojoResponseEntity = ResponseEntity.status(HttpStatus.OK).body(responsePojo);
             } else {
                 responsePojoResponseEntity = ResponseEntity.status(HttpStatus.NO_CONTENT).body(responsePojo);
             }

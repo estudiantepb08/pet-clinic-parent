@@ -33,7 +33,7 @@ public class MascotaController {
         responsePojo = iMascotaService.getMascota();
         try {
             if (responsePojo.getMessages().equals(ResponseMessageEnum.MESSAGE_OK_ENUM.getMessages())) {
-                responsePojoResponseEntity = ResponseEntity.status(HttpStatus.FOUND).body(responsePojo);
+                responsePojoResponseEntity = ResponseEntity.status(HttpStatus.OK).body(responsePojo);
             } else {
                 responsePojoResponseEntity = ResponseEntity.status(HttpStatus.NO_CONTENT).body(responsePojo);
             }
@@ -52,7 +52,7 @@ public class MascotaController {
         responsePojo = iTipoMascotaService.getTipoDeMascota();
         try {
             if (responsePojo.getData() != null) {
-                responsePojoResponseEntity = ResponseEntity.status(HttpStatus.FOUND).body(responsePojo);
+                responsePojoResponseEntity = ResponseEntity.status(HttpStatus.OK).body(responsePojo);
             } else {
                 responsePojoResponseEntity = ResponseEntity.status(HttpStatus.NO_CONTENT).body(responsePojo);
             }
@@ -71,7 +71,7 @@ public class MascotaController {
         responsePojo = iMascotaService.findMascotaById(mascotaId);
         try{
             if (responsePojo.getMessages().equals(ResponseMessageEnum.MESSAGE_OK_ENUM.getMessages())){
-                responsePojoResponseEntity = ResponseEntity.status(HttpStatus.FOUND).body(responsePojo);
+                responsePojoResponseEntity = ResponseEntity.status(HttpStatus.OK).body(responsePojo);
             }else {
                 responsePojoResponseEntity = ResponseEntity.status(HttpStatus.NO_CONTENT).body(responsePojo);
             }
@@ -162,7 +162,7 @@ public class MascotaController {
         try{
             responsePojo = iMascotaService.getListarTodo(buscar);
             if (responsePojo.getMessages().equals(ResponseMessageEnum.MESSAGE_OK_ENUM.getMessages())){
-                responsePojoResponseEntity = ResponseEntity.status(HttpStatus.FOUND).body(responsePojo);
+                responsePojoResponseEntity = ResponseEntity.status(HttpStatus.OK).body(responsePojo);
             }else {
                 responsePojoResponseEntity = ResponseEntity.status(HttpStatus.NOT_FOUND).body(responsePojo);
             }
