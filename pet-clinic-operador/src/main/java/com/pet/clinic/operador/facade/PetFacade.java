@@ -28,6 +28,7 @@ public class PetFacade {
 	    public ResponseMsBuscador getPet(String mascotaId) {
 	        HttpHeaders headers = new HttpHeaders();
 	        HttpEntity<?> requestEntity = new HttpEntity<>(headers);
+	        System.out.println(petUrl + "URL BUSCAR");
 
 	        ResponseEntity<ResponseMsBuscador> response = restTemplate.exchange(
 	        		petUrl + "/mascotas/" + mascotaId, HttpMethod.GET, requestEntity,
