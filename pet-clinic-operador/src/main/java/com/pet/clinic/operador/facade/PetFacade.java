@@ -26,7 +26,7 @@ public class PetFacade {
 	    private String petUrl;
 	    
 	    public ResponseMsBuscador getPet(String mascotaId) {
-	        HttpHeaders headers = new HttpHeaders();
+	       /* HttpHeaders headers = new HttpHeaders();
 	        HttpEntity<?> requestEntity = new HttpEntity<>(headers);
 	        System.out.println(petUrl + "URL BUSCAR");
 
@@ -37,7 +37,14 @@ public class PetFacade {
 
 	        ResponseMsBuscador responseMsBuscador = response.getBody();
 	        System.out.println(responseMsBuscador);
-	        return responseMsBuscador;
+	        return responseMsBuscador;*/
+	        System.out.println(petUrl + "URL BUSCAR");
+			ResponseEntity<ResponseMsBuscador> response = restTemplate.getForEntity(String.format(petUrl, mascotaId), ResponseMsBuscador.class);
+			System.out.println(response + " Response");
+			ResponseMsBuscador pet = response.getBody();
+			System.out.println(pet + " Response");
+
+			return pet;
 	    }
 	    
 	    public ResponseMsBuscador searchTodo(String paramSearch) {
