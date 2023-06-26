@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/pet-clinic-especialidades")
+@RequestMapping("/v1/pet-clinic-especialidades")
 
 public class EspecialidadController {
     private static final Logger LOGGER = LoggerFactory.getLogger(EspecialidadController.class);
@@ -23,20 +23,21 @@ public class EspecialidadController {
     private IEspecialidadService iEspecialidadService;
     private ResponsePojo responsePojo;
 
-    @GetMapping("/especilidades")
-    public ResponseEntity<ResponsePojo> getEspecialidad(){
+    @GetMapping
+    public ResponseEntity<ResponsePojo> getEspecialidades(){
 
-        responsePojo = iEspecialidadService.getEspecialidad();
         ResponseEntity<ResponsePojo> responsePojoResponseEntity = null;
 
         try {
-            if (responsePojo.getMessages().equals(ResponseMessageEnum.MESSAGE_OK_ENUM.toString())){
+            responsePojo = iEspecialidadService.getEspecialidad();
+
+            if (responsePojo.getMessages().equals(ResponseMessageEnum.MESSAGE_OK_ENUM.getMessages())){
                 responsePojoResponseEntity =  ResponseEntity.status(HttpStatus.FOUND).body(responsePojo);
             }else {
                 responsePojoResponseEntity = ResponseEntity.status(HttpStatus.NO_CONTENT).body(responsePojo);
             }
         }catch (Exception e){
-            LOGGER.error("Error en lista de Especialidad: ",e.getCause().getMessage());
+            LOGGER.error("Error en Especialidad: ",e.getCause().getMessage());
         }finally {
             LOGGER.info("getEspecialidad");
         }
@@ -56,7 +57,7 @@ public class EspecialidadController {
                 responsePojoResponseEntity = ResponseEntity.status(HttpStatus.NO_CONTENT).body(responsePojo);
             }
         }catch (Exception e){
-            LOGGER.error("Especialidad no encontrado: ", e.getCause().getMessage());
+            LOGGER.error("Epecialidad no encontrado: ", e.getCause().getMessage());
         }
         finally {
             LOGGER.info("getEspecialidad");

@@ -21,9 +21,9 @@ public interface IMascotaRepository extends CrudRepository<Mascota, Long> {
             " FROM Mascota ma INNER JOIN ma.tipoMascota tm WHERE ma.mascotasId =:idMascota ")
     List<MascotaDto> getMascotaPorIdAntTipo(@Param("idMascota") Long idMascota);
 
-    @Query(value = " SELECT p.primer_nombre AS primerNombre, p.segundo_nombre AS segundoNombre, p.primer_apellido AS primerApellido, " +
+    @Query(value = " SELECT p.propietarios_id AS propietariosId, p.primer_nombre AS primerNombre, p.segundo_nombre AS segundoNombre, p.primer_apellido AS primerApellido, " +
             " p.segundo_apellido AS segundoApellido, c.telefono AS telefono, c.direccion AS direccion, c.correo_electronico AS correoElectronico, " +
-            " m.nombre_mascota AS nombreMascota, m.fecha_nacimiento AS fechaNacimiento, tm.tipo_mascota AS tipoMascota " +
+            " m.nombre_mascota AS nombreMascota, m.fecha_nacimiento AS fechaNacimiento, tm.tipo_mascota AS tipoMascota, m.mascotas_id AS mascotasId"  +
             " FROM propietarios p INNER JOIN contactos c ON p.propietarios_id = c.propietarios_id "+
             " INNER JOIN mascotas m ON p.propietarios_id = m.propietarios_id " +
             " INNER JOIN tipo_mascotas tm ON m.tipo_mascotas_id = tm.tipo_mascotas_id " +

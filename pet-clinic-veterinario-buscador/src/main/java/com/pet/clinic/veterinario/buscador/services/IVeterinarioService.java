@@ -8,5 +8,7 @@ public interface IVeterinarioService  {
     ResponsePojo findVeterinarioById(Long veterinarioId);
     ResponsePojo saveVeterinario(VeterinariosRequestPojo veterinario);
     ResponsePojo updateVeterinario(VeterinariosRequestPojo veterinario, Long venerarioId);
-    Boolean deleteVeterinario (Long veterinarioId);
+    ResponsePojo updateVeterinarioPatch(VeterinariosRequestPojo veterinariosRequestPojo, Long veterinarioId);
+    ResponsePojo deleteVeterinario (Long veterinarioId);
+    ResponsePojo getListarTodo(String buscar);
 }

@@ -1,6 +1,5 @@
 package com.pet.clinic.buscador.controllers;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.pet.clinic.buscador.enums.ResponseMessageEnum;
 import com.pet.clinic.buscador.pojos.PropietarioRequestPojo;
 import com.pet.clinic.buscador.pojos.ResponsePojo;
@@ -26,7 +25,7 @@ public class PropietarioController {
     private IPropietarioService iPropietarioService;
     private ResponsePojo responsePojo;
 
-    @GetMapping("/list-tipo-mascota")
+    @GetMapping("/tipo-mascotas")
     public ResponseEntity<ResponsePojo> getTiposMascotas(){
 
         ResponseEntity<ResponsePojo> responsePojoResponseEntity = null;
@@ -49,7 +48,7 @@ public class PropietarioController {
         return responsePojoResponseEntity;
     }
 
-    @GetMapping("/list-propietarios")
+    @GetMapping("/propietarios")
     public ResponseEntity<ResponsePojo> getPropietarios(){
 
         ResponseEntity<ResponsePojo> responsePojoResponseEntity = null;
@@ -71,8 +70,8 @@ public class PropietarioController {
         return responsePojoResponseEntity;
     }
 
-    @GetMapping("/list-propietario")
-    public ResponseEntity<ResponsePojo> getPropietario(@RequestParam("propietarioId") String propietarioId){
+    @GetMapping("/propietarios/{propietarioId}")
+    public ResponseEntity<ResponsePojo> getPropietario(@PathVariable String propietarioId){
 
         ResponseEntity<ResponsePojo> responsePojoResponseEntity = null;
        // responsePojo = null;
@@ -94,7 +93,7 @@ public class PropietarioController {
         return responsePojoResponseEntity;
     }
 
-    @PostMapping("/propietario")
+    @PostMapping("/propietarios")
     public ResponseEntity<ResponsePojo> savePropietario(@RequestBody PropietarioRequestPojo propietarioRequestPojo){
 
         ResponseEntity<ResponsePojo> responsePojoResponseEntity = null;
@@ -116,7 +115,7 @@ public class PropietarioController {
         return responsePojoResponseEntity;
     }
 
-    @PutMapping("/propitario/numero/{requestPropietarioId}")
+    @PutMapping("/propietarios/numero/{requestPropietarioId}")
     public ResponseEntity<ResponsePojo> updatePropietario(@RequestBody PropietarioRequestPojo propietarioRequestPojo,
                                                           @PathVariable Long requestPropietarioId){
 
@@ -140,7 +139,7 @@ public class PropietarioController {
         return responsePojoResponseEntity;
     }
 
-    @DeleteMapping("/propitario/{propietarioId}")
+    @DeleteMapping("/propietarios/{propietarioId}")
     public ResponseEntity<ResponsePojo> eliminarPropietario(@PathVariable Long propietarioId){
 
         ResponseEntity<ResponsePojo> responsePojoResponseEntity = null;

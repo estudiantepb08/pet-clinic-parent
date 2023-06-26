@@ -2,15 +2,14 @@ package com.pet.clinic.veterinario.buscador.controllers;
 
 
 
+import com.pet.clinic.veterinario.buscador.pojos.VeterinariosRequestPojo;
+import jakarta.websocket.server.PathParam;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.pet.clinic.veterinario.buscador.enums.ResponseMessageEnum;
 import com.pet.clinic.veterinario.buscador.pojos.ResponsePojo;
@@ -19,7 +18,7 @@ import com.pet.clinic.veterinario.buscador.services.IVeterinarioService;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/pet-clinic-veterinarios")
+@RequestMapping("/v1/pet-clinic-veterinarios")
 public class VeterinarioController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(VeterinarioController.class);
@@ -28,7 +27,7 @@ public class VeterinarioController {
     private IVeterinarioService iVeterinarioService;
     private ResponsePojo responsePojo;
 
-    @GetMapping("/list-especilidades")
+    @GetMapping("/especialidades")
     public ResponseEntity<ResponsePojo> getEspecialidades(){
 
         ResponseEntity<ResponsePojo> responsePojoResponseEntity = null;
@@ -49,7 +48,9 @@ public class VeterinarioController {
         return responsePojoResponseEntity;
     }
 
-    @GetMapping("/list-veterinarios")
+
+
+    @GetMapping
     public ResponseEntity<ResponsePojo> getVeterinario(){
 
         ResponseEntity<ResponsePojo> responsePojoResponseEntity = null;
@@ -68,7 +69,7 @@ public class VeterinarioController {
         return responsePojoResponseEntity;
     }
 
-    @GetMapping("/list-veterinario")
+    @GetMapping("/veterinario")
     public ResponseEntity<ResponsePojo> getVeterinario(@RequestParam("veterinarioId") String veterinarioId){
 
         ResponseEntity<ResponsePojo> responsePojoResponseEntity = null;
@@ -84,6 +85,117 @@ public class VeterinarioController {
         }
         finally {
             LOGGER.info("getVeterinario");
+        }
+        return responsePojoResponseEntity;
+    }
+
+    @GetMapping("/veterinario/todos")
+    public ResponseEntity<ResponsePojo> getListBuscarTodo(@PathParam("buscar") String buscar){
+        ResponseEntity<ResponsePojo> responsePojoResponseEntity = null;
+        try{
+            responsePojo = iVeterinarioService.getListarTodo(buscar);
+            if (responsePojo.getMessages().equals(ResponseMessageEnum.MESSAGE_OK_ENUM.getMessages())){
+                responsePojoResponseEntity = ResponseEntity.status(HttpStatus.FOUND).body(responsePojo);
+            }else {
+                responsePojoResponseEntity = ResponseEntity.status(HttpStatus.NOT_FOUND).body(responsePojo);
+            }
+        }catch (Exception e){
+            LOGGER.error("Error en la busqueda por todos los campos", e.getCause().getMessage());
+            responsePojoResponseEntity = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }finally {
+            LOGGER.info("getListBuscarTodo");
+        }
+        return responsePojoResponseEntity;
+    }
+
+    @PostMapping
+    public ResponseEntity<ResponsePojo> saveVeterinario(@RequestBody VeterinariosRequestPojo veterinarioRequestPojo) {
+
+        ResponseEntity<ResponsePojo> responsePojoResponseEntity = null;
+        responsePojo = iVeterinarioService.saveVeterinario(veterinarioRequestPojo);
+
+        try{
+            if(responsePojo.getMessages().equals(ResponseMessageEnum.MESSAGE_OK_ENUM.getMessages())){
+                responsePojoResponseEntity = ResponseEntity.status(HttpStatus.CREATED).body(responsePojo);
+            }else{
+                responsePojoResponseEntity = ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(responsePojo);
+            }
+        }catch (Exception e){
+            LOGGER.error("Error al guardar el veterinario",e.getCause().getMessage());
+            responsePojoResponseEntity = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }finally {
+            LOGGER.info("saveVeterinario");
+        }
+        return responsePojoResponseEntity;
+    }
+
+    @PatchMapping("/{veterinarioId}")
+    public ResponseEntity<ResponsePojo> updateVeterinarioPatch(
+            @RequestBody VeterinariosRequestPojo veterinarioRequestPojo,
+            @PathVariable Long veterinarioId) {
+
+        ResponseEntity<ResponsePojo> responsePojoResponseEntity = null;
+        responsePojo = iVeterinarioService.updateVeterinarioPatch(veterinarioRequestPojo, veterinarioId);
+
+        try {
+            if (responsePojo.getMessages().equals(ResponseMessageEnum.MESSAGE_OK_ENUM.getMessages())) {
+                responsePojoResponseEntity = ResponseEntity.status(HttpStatus.OK).body(responsePojo);
+            } else {
+                responsePojoResponseEntity = ResponseEntity.status(HttpStatus.NOT_FOUND).body(responsePojo);
+            }
+        } catch (Exception e) {
+            LOGGER.error("Error al actualizar el veterinario", e.getCause().getMessage());
+            responsePojoResponseEntity = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        } finally {
+            LOGGER.info("updateVeterinarioPatch");
+        }
+
+        return responsePojoResponseEntity;
+    }
+
+
+    @PutMapping ("/{VeterinarioId}")
+    public ResponseEntity<ResponsePojo> updateVeterinario(@RequestBody VeterinariosRequestPojo veterinariosRequestPojo,
+                                                            @PathVariable Long VeterinarioId){
+        ResponseEntity<ResponsePojo>responsePojoResponseEntity = null;
+        try{
+            responsePojo = iVeterinarioService.findVeterinarioById(VeterinarioId);
+            if(responsePojo.getMessages().equals(ResponseMessageEnum.MESSAGE_OK_ENUM.getMessages())){
+
+
+                responsePojo = iVeterinarioService.updateVeterinario(veterinariosRequestPojo,VeterinarioId);
+                responsePojoResponseEntity = ResponseEntity.status(HttpStatus.CREATED).body(responsePojo);
+            }else{
+                responsePojoResponseEntity = ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(responsePojo);
+            }
+        }catch (Exception e){
+            LOGGER.error("Error al actualizar el veterinario",e.getCause().getMessage());
+            responsePojoResponseEntity = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }finally {
+            LOGGER.info("Fin de la actualizacion del veterinario");
+        }
+        return responsePojoResponseEntity;
+    }
+
+    @DeleteMapping("/")
+    public ResponseEntity<ResponsePojo> eliminarVeterinario(@PathParam("veterinarioId") Long veterinarioId) {
+
+        ResponseEntity<ResponsePojo> responsePojoResponseEntity = null;
+
+        try {
+
+            responsePojo = iVeterinarioService.deleteVeterinario(veterinarioId);
+
+            if (responsePojo.getMessages().equals(ResponseMessageEnum.MESSAGE_OK_ENUM.getMessages())) {
+                responsePojoResponseEntity = ResponseEntity.status(HttpStatus.OK).body(responsePojo);
+            } else {
+                responsePojoResponseEntity = ResponseEntity.status(HttpStatus.NOT_FOUND).body(responsePojo);
+            }
+
+        } catch (Exception e) {
+
+            LOGGER.error("Error Eliminar el veterinario: ", e.getCause().getMessage());
+            responsePojoResponseEntity = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responsePojo);
         }
         return responsePojoResponseEntity;
     }

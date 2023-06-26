@@ -3,6 +3,7 @@ package com.pet.clinic.veterinario.buscador.services;
 import com.pet.clinic.veterinario.buscador.enums.ResponseMessageEnum;
 import com.pet.clinic.veterinario.buscador.models.dto.EspecialidadDto;
 import com.pet.clinic.veterinario.buscador.models.entity.Especialidad;
+import com.pet.clinic.veterinario.buscador.models.entity.Veterinario;
 import com.pet.clinic.veterinario.buscador.pojos.EspecialidadRequestPojo;
 import com.pet.clinic.veterinario.buscador.pojos.ResponsePojo;
 import com.pet.clinic.veterinario.buscador.repository.IEspecialidadRepository;
@@ -27,18 +28,18 @@ public class EspecialidadServiceImpl implements IEspecialidadService {
         this.responsePojo = responsePojo;
     }
 
+
     @Override
     public ResponsePojo getEspecialidad() {
 
-        List<Especialidad> listEspecialidades = new ArrayList<>();
+        List<Especialidad> especialidades = new ArrayList<>();
 
-        iEspecialidadRepository.findAll().forEach(listEspecialidades::add);
-
-        if (listEspecialidades.isEmpty()) {
+        iEspecialidadRepository.findAll().forEach(especialidades::add);
+        if (especialidades.isEmpty()) {
             responsePojo.setMessages(ResponseMessageEnum.MESSAGE_ERROR_NOT_FOUND_ENUM.getMessages());
         } else {
             responsePojo.setMessages(ResponseMessageEnum.MESSAGE_OK_ENUM.getMessages());
-            responsePojo.setData(listEspecialidades);
+            responsePojo.setData(especialidades);
         }
         return responsePojo;
     }
@@ -46,31 +47,13 @@ public class EspecialidadServiceImpl implements IEspecialidadService {
     @Override
     public ResponsePojo findEspecialidadById(Long especialidadId) {
 
-        Optional<Especialidad> optinalEspecialidad = iEspecialidadRepository.findById(especialidadId);
-
-        if (optinalEspecialidad.isPresent()) {
+        Optional<Especialidad> optionalEspecilidad = iEspecialidadRepository.findById(especialidadId); // pendiente repository
+        if (optionalEspecilidad.isPresent()) {
             responsePojo.setMessages(ResponseMessageEnum.MESSAGE_OK_ENUM.getMessages());
-            responsePojo.setData(optinalEspecialidad.get());
+            responsePojo.setData(optionalEspecilidad.get());
         } else {
             responsePojo.setMessages(ResponseMessageEnum.MESSAGE_ERROR_NOT_FOUND_ENUM.getMessages());
-
         }
         return responsePojo;
-    }
-
-    // revisar funcionamiento
-    @Override
-    public ResponsePojo saveEspecialidad(EspecialidadRequestPojo especialidadRequestPojo) {
-        return null;
-    }
-
-    @Override
-    public ResponsePojo updateEspecialidad(EspecialidadRequestPojo especialidadRequestPojo, Long especialidadId) {
-        return null;
-    }
-
-    @Override
-    public Boolean deleteEspecialidad(Long especialidadId) {
-        return null;
     }
 }
