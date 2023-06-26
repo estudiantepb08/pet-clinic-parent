@@ -40,7 +40,7 @@ public class PetFacade {
 	        return responseMsBuscador;*/
 	        System.out.println(petUrl + "URL BUSCAR");
 			ResponseEntity<ResponseMsBuscador> response = restTemplate.getForEntity(String.format(petUrl, mascotaId), ResponseMsBuscador.class);
-			System.out.println(response + " Response");
+			System.out.println(response + " Response" + response.getStatusCode() + response.toString());
 			ResponseMsBuscador pet = response.getBody();
 			System.out.println(pet + " Response");
 

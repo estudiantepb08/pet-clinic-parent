@@ -27,6 +27,7 @@ public class VeterinaryFacade {
 	        		veterinaryUrl + "/veterinario" + "/{veterinarioId}", HttpMethod.GET, requestEntity,
 	                ResponseMsBuscador.class, veterinarioId);
 	        System.out.println(response);
+			System.out.println(response + " Response" + response.getStatusCode() + response.toString());
 
 	        ResponseMsBuscador responseMsBuscador = response.getBody();
 	        System.out.println(responseMsBuscador);
@@ -40,7 +41,8 @@ public class VeterinaryFacade {
 	    	ResponseEntity<ResponseMsBuscador> response = restTemplate.exchange(
 	    			veterinaryUrl + "/veterinario" + "/todos" + "?buscar={paramSearch}",HttpMethod.GET, requestEntity,
 	    			ResponseMsBuscador.class, paramSearch);
-	    	
+			System.out.println(response + " Response" + response.getStatusCode() + response.toString());
+
 	    	ResponseMsBuscador responseMsBuscador = response.getBody();
 	    	
 	    	return responseMsBuscador;

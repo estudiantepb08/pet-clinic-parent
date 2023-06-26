@@ -28,6 +28,7 @@ public class OwnerFacade {
 	        		ownerUrl + "/propietarios/" + propietarioId, HttpMethod.GET, requestEntity,
 	                ResponseMsBuscador.class, propietarioId);
 	        System.out.println(response);
+			System.out.println(response + " Response" + response.getStatusCode() + response.toString());
 
 	        ResponseMsBuscador responseMsBuscador = response.getBody();
 	        System.out.println(responseMsBuscador);
